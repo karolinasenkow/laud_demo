@@ -42,7 +42,7 @@ def run_command(command):
 
 @app.route('/<command>')
 def command_server(command):
-    return run_command('python ' + path + '/linux.py')
+    return run_command('python ' + path + '/blast.py')
 
 #@app.route('/<command>')
 #def read_input(command):
