@@ -10,24 +10,15 @@ path = os.getcwd()
 
 app = Flask(__name__)
 
-#@app.route("/", methods=["POST","GET"])
-#def home():
-#    if request.method == "POST":
-#        with open('query.txt', 'w') as query: # query output file
-#            input1 = request.form["post1"]
-#            query.write(input1)
-#        with open('subject.txt', 'w') as subject: # subject output file
-#            input2 = request.form["post2"]
-#            subject.write(input2)
-#        return redirect(url_for("command_server", command=command_server))
-#    else:
-#        return render_template("index.html")
-
 @app.route("/", methods=["POST","GET"])
 def home():
     if request.method == "POST":
+        if request.form['post1']:
+            with open('query.txt', 'w') as query: # query output file
+                input1 = request.form["post1"]
+                query.write(input1)
         if request.form["radiobutton"]:
-            option = request.form['radiobutton']
+            option = request.form['radiobutton'] # get value of radio button
             if option == 'option1':
                 return redirect(url_for("command_server0", command=command_server0))
             else:
@@ -35,10 +26,8 @@ def home():
     else:
         return render_template("index.html")
 
-
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
-
 
 @app.route('/command0/<command>')
 def command_server0(command):
