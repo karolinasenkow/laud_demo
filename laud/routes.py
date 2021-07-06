@@ -34,7 +34,7 @@ path = os.getcwd()
 def sql():
     form = ChoiceForm()
     if form.validate_on_submit():
-        sql_query = "SELECT taxa_name, subject_id FROM 'dataset' WHERE taxa_name = '" + form.species_result.data + "' AND subject_id = " + form.subject_result.data + ";"
+        sql_query = "SELECT taxa_name, subject_id FROM dataset WHERE taxa_name = '" + form.species_result.data + "' AND subject_id = '" + form.subject_result.data + "';"
 
         cursor = db.session.execute(sql_query)
         row = ''
@@ -45,7 +45,7 @@ def sql():
             row = cursor.fetchone()
         posts = Metadata.query.all()
 
-        return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts, legend = 'SQLExample')
+        return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts)
     return render_template('choose_query.html', title='Choose Query', form=form, legend='Choose Query')
 
 
