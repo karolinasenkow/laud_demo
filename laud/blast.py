@@ -7,10 +7,14 @@ path = os.getcwd()
 blast_db = open("blast_db.fasta","w")
 
 def test0():
-    print('test0 data')
+    os.system('makeblastdb -in ' + path + '\\16S_db.fasta -out ' + path + '\\16S -title 16S -dbtype nucl')
+    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\16S')
+    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\16S -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle"')
 
 def test1():
-    print('test1 data' + '\n')
+    os.system('makeblastdb -in ' + path + '\\bacterial_genome.fna -out ' + path + '\\bacteria -title bacteria -dbtype nucl')
+    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\bacteria')
+    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\bacteria -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle"')
 
 
 if __name__ == '__main__':

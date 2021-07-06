@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+			{% if legend == "Choose Query" %}
+            <div class="form-group">
+                {{ form.species_result.label(class="form-control-label") }}
+                {% if form.species_result.errors %}
+                    {{ form.species_result(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.species_result.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.species_result(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			{% endif %}
+			
+            <div class="form-group">
+                {{ form.subject_result.label(class="form-control-label") }}
+                {% if form.subject_result.errors %}
+                    {{ form.subject_result(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.subject_result.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.subject_result(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
