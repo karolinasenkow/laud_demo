@@ -1,19 +1,8 @@
-<style>
-h1 {
-  color: #363636;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 350%;
-}
-p {
-  color: black;
-  font-family: 'Courier New', monospace;
-  font-size: 120%;
-}
+{% extends "layout.html" %}
+{% block content %}
 </style>
-
-</style>
-<h1 style="background-color:#b3d9ff;">BLASTn</h1>
-<body style="background-color:#faebd7;">
+<h1>BLASTn</h1>
+<body>
 <form action =' #', method="post">
 	<p>Enter sequence: <br> <textarea rows="6" cols="60" name="post1"></textarea> </p>
 
@@ -33,3 +22,4 @@ p {
 </div>
 <input type="submit">
 </form>
+{% endblock content %}

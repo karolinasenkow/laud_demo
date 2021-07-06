@@ -26,5 +26,5 @@ subject_choice = [(row['subject_id'],row['subject_id']) for row in subject_id1]
 
 class ChoiceForm(FlaskForm):
     species_result=SelectField('Species Choice', choices=species_choice)
-    subject_result=SelectField('Sample ID Choice', choices=subject_choice)
+    subject_result=SelectField('Subject ID Choice', choices=subject_choice)
     submit = SubmitField('Submit')
