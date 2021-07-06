@@ -8,23 +8,62 @@ from laud import db
 from laud.models import Metadata
 from wtforms.fields.html5 import DateField
 
-species = Metadata.query.with_entities(Metadata.taxa_name).distinct()
+sample_id = Metadata.query.with_entities(Metadata.sample_id).distinct()
 subject_id = Metadata.query.with_entities(Metadata.subject_id).distinct()
+event = Metadata.query.with_entities(Metadata.event).distinct()
+taxa_type = Metadata.query.with_entities(Metadata.taxa_type).distinct()
+species = Metadata.query.with_entities(Metadata.taxa_name).distinct()
+cure = Metadata.query.with_entities(Metadata.cure_status).distinct()
 
-# test choices (select field)
-species1=list()
-for row in species:
+# mysql query choices (select field)
+
+# sample id
+sample_id1 = list()
+for row in sample_id:
     rowDict=row._asdict()
-    species1.append(rowDict)
-species_choice = [(row['taxa_name'],row['taxa_name']) for row in species1]
+    sample_id1.append(rowDict)
+sample_choice = [(None,"")]+[(row['sample_id'],row['sample_id']) for row in sample_id1]
 
+# subject id
 subject_id1 = list()
 for row in subject_id:
     rowDict=row._asdict()
     subject_id1.append(rowDict)
-subject_choice = [(row['subject_id'],row['subject_id']) for row in subject_id1]
+subject_choice = [(None,"")]+[(row['subject_id'],row['subject_id']) for row in subject_id1]
+
+# event
+event1 = list()
+for row in event:
+    rowDict=row._asdict()
+    event1.append(rowDict)
+event_choice = [(None,"")]+[(row['event'],row['event']) for row in event1]
+
+# taxa type
+taxa_type1=list()
+for row in taxa_type:
+    rowDict=row._asdict()
+    taxa_type1.append(rowDict)
+type_choice = [(None, "")]+[(row['taxa_type'],row['taxa_type']) for row in taxa_type1]
+
+# taxa name
+species1=list()
+for row in species:
+    rowDict=row._asdict()
+    species1.append(rowDict)
+species_choice = [(None, "")]+[(row['taxa_name'],row['taxa_name']) for row in species1]
+
+# cure status
+cure1=list()
+for row in cure:
+    rowDict=row._asdict()
+    cure1.append(rowDict)
+cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
 
 class ChoiceForm(FlaskForm):
-    species_result=SelectField('Species Choice', choices=species_choice)
-    subject_result=SelectField('Subject ID Choice', choices=subject_choice)
+    sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
+    subject_result=SelectField('Subject ID', choices=subject_choice, default=None)
+    event_result=SelectField('Event', choices=event_choice, default=None)
+    type_result=SelectField('Taxa Type', choices=type_choice, default=None)
+    species_result=SelectField('Species', choices=species_choice, default=None)
+    cure_result=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField('Submit')

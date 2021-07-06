@@ -15,26 +15,12 @@ from sqlalchemy import and_
 # set current path
 path = os.getcwd()
 
-# @app.route("/")
-# def sql():
-#     # aggregate: return number of tests for each lab
-#     sql_query = "SELECT sample_id, taxa_name, taxa_count FROM `dataset` WHERE taxa_name = 'Ateline_gammaherpesvirus_3' AND taxa_count > 99"
-#     cursor = db.session.execute(sql_query)
-#     row = ''
-#     returnString = str(row)
-#     row = cursor.fetchone()
-#     while row is not None:
-#         returnString += "\n" + str(row)
-#         row = cursor.fetchone()
-#     posts = Metadata.query.all()
-
-#     return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts)
-
 @app.route("/", methods=["POST","GET"])
 def sql():
     form = ChoiceForm()
     if form.validate_on_submit():
-        sql_query = "SELECT taxa_name, subject_id FROM dataset WHERE taxa_name = '" + form.species_result.data + "' AND subject_id = '" + form.subject_result.data + "';"
+        sql_query = "SELECT taxa_name, subject_id FROM dataset WHERE taxa_name = '" + \
+        form.species_result.data + "' AND subject_id = '" + form.subject_result.data + "';"
 
         cursor = db.session.execute(sql_query)
         row = ''
@@ -48,6 +34,21 @@ def sql():
         return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts)
     return render_template('choose_query.html', title='Choose Query', form=form, legend='Choose Query')
 
+@app.route("/adv_sql", methods=["POST","GET"])
+def adv_sql():
+    if request.method == "POST":
+        if request.form['post']:
+            sql_query = request.form["post"]
+            cursor = db.session.execute(sql_query)
+            row = ''
+            returnString = str(row)
+            row = cursor.fetchone()
+            while row is not None:
+                returnString += "\n" + str(row)
+                row = cursor.fetchone()
+            posts = Metadata.query.all()
+            return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts)
+    return render_template("adv_sql.html")
 
 @app.route("/blast", methods=["POST","GET"])
 def home():

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+</style>
+<br>
+<br>
+<br>
+<h1>Custom MySQL Search</h1>
+<h4>Example Query:</h4>
+<p>SELECT * from dataset WHERE subject_id = 'IUMP001';</p>
+<body>
+<form action =' #', method="post">
+    <p>Enter MySQL Query:<br> <textarea rows="6" cols="60" name="post"></textarea></p>
+    <input type="submit">
+</form>
+{% endblock content %}
