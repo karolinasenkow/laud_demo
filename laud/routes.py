@@ -53,7 +53,7 @@ def sql():
 def home():
     if request.method == "POST":
         if request.form['post1']:
-            with open('query.txt', 'w') as query: # query output file
+            with open(os.path.join(path + '\laud', 'query.txt'), 'w') as query: # query output file
                 input1 = request.form["post1"]
                 query.write(input1)
         if request.form["radiobutton"]:
@@ -70,9 +70,9 @@ def run_command(command):
 
 @app.route('/command0/<command>')
 def command_server0(command):
-    return run_command('python ' + path + '/blast.py -d 0')
+    return run_command('python ' + path + '/laud/blast.py -d 0')
 
 @app.route('/command1/<command>')
 def command_server1(command):
-    return run_command('python ' + path + '/blast.py -d 1')
+    return run_command('python ' + path + '/laud/blast.py -d 1')
 

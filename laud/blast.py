@@ -2,9 +2,7 @@ import os
 
 # set path
 path = os.getcwd()
-
-# create output file
-blast_db = open("blast_db.fasta","w")
+path = path + '\\laud'
 
 def test0():
     os.system('makeblastdb -in ' + path + '\\16S_db.fasta -out ' + path + '\\16S -title 16S -dbtype nucl')
