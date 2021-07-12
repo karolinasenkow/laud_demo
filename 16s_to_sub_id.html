@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+			{% if legend == "16S Subject ID" %}
+            <h4>Enter FASTA ID of BLAST hit to find corresponding subject ID.</h4>
+            <p>Example: M70445:13:000000000-C98LC:1:1102:21955:8027 2:N:0:CATACACCATCC</p>
+            <div class="form-group">
+                {{ form.FASTA_ID.label(class="form-control-label") }}
+                {% if form.FASTA_ID.errors %}
+                    {{ form.FASTA_ID(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.FASTA_ID.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.FASTA_ID(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
