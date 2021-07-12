@@ -29,14 +29,14 @@ subject_id1 = list()
 for row in subject_id:
     rowDict=row._asdict()
     subject_id1.append(rowDict)
-subject_choice = [(row['subject_id'],row['subject_id']) for row in subject_id1]
+subject_choice = [("%%","")]+[(row['subject_id'],row['subject_id']) for row in subject_id1]
 
 # event
 event1 = list()
 for row in event:
     rowDict=row._asdict()
     event1.append(rowDict)
-event_choice = [(row['event'],row['event']) for row in event1]
+event_choice = [("%%","")]+[(row['event'],row['event']) for row in event1]
 
 # taxa type
 taxa_type1=list()
@@ -50,7 +50,7 @@ species1=list()
 for row in species:
     rowDict=row._asdict()
     species1.append(rowDict)
-species_choice = [(row['taxa_name'],row['taxa_name']) for row in species1]
+species_choice = [("%%","")]+[(row['taxa_name'],row['taxa_name']) for row in species1]
 
 # cure status
 cure1=list()
@@ -61,7 +61,7 @@ cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
 
 class ChoiceForm(FlaskForm):
     #sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
-    #subject_result=SelectField('Subject ID', choices=subject_choice, default=None)
+    subject_result=SelectField('Subject ID', choices=subject_choice, default=None)
     event_result=SelectField('Event', choices=event_choice, default=None)
     #type_result=SelectField('Taxa Type', choices=type_choice, default=None)
     species_result=SelectField('Species', choices=species_choice, default=None)
