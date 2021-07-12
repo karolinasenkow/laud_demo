@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+</style>
+<h1>BLASTn</h1>
+<body>
+<form action =' #', method="post">
+	<p>Enter sequence: <br> <textarea rows="6" cols="60" name="post1"></textarea> </p>
+
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="radiobutton" id="" value="option1" checked>
+    <label class="form-check-label" for="radiobutton1">
+                            16S
+    </label>
+</div>
+
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2"
+                               value="option2">
+    <label class="form-check-label" for="exampleRadios2">
+                            Bacterial Genome
+    </label>
+</div>
+<input type="submit">
+</form>
+{% endblock content %}

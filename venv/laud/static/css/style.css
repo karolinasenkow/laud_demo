@@ -1,0 +1,46 @@
+h1{
+	color: #2E186A;
+	font-family:  Verdana;
+}
+
+h2{
+	color: #2E186A;
+}
+
+h3{
+	color: #2E186A;
+}
+
+p{
+	color: black;
+}
+
+div{
+
+	margin-left: 2%;
+	width: 98%;
+	margin-top: 2%;
+}
+
+
+
+.myimg{
+	width:250px;
+	height:250px;
+	object-fit:cover;
+	border-radius:50%;
+}
+
+figure {
+	display: inline-block;
+	margin: 50px; /* adjust as needed */
+	vertical-align: top;
+}
+figure img {
+	vertical-align: top;
+}
+figure figcaption {
+	text-align: center;
+}
+
+

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<div class = "row">
+	<div class = "column" style="background-color: lavender; text-align: center; border-radius: 10px; width:50%">
+		<br>
+		<h1> Welcome! </h1>
+		<hr>
+		<p> Recent advancements in bioinformatic and biocomputational tools have revolutionized the speed and quality of data collection, leading to larger repositories of clinical data than ever seen before. The rapidly growing volume of raw data worldwide calls for development of new resources that can allow for more efficient, guided, and standardized approaches to medical research. The Urinary Microbiome Database poses a step in this direction, providing an integrated workbench for researchers and clinicians in the urinary microbiome research community. This database embodies a streamlined framework for navigating and analyzing large quantities of urobiome data, including de-identified patient metadata, 16S rRNA sequence data, and whole genome sequence data. </p>
+		<br>
+		<h3> Data and Database Query </h3>
+		<p> The Urinary Microbiome Database is currently populated with metadata and genomic data from a study led by Dr. David Nelson of the Indiana University School of Medicine. The study aims to find the cause of urethritis in males. The metadata shows the participant ID, sample ID, sample event, microbial taxa type, microbial taxa, microbial count, and cure status of approximately 300 male patients. The user can run both advanced and simple SQL queries on this data by navigating to the "Database Query" tab. </p>
+		<br>
+		<h3> Data Analysis </h3>
+		<p> The user also has the option to perform data analysis using a variety of integrated bioinformatic and biostatistical tools. These tools can be found under the "Data Analysis" tab. For genomic data, the BLAST bioinformatics tool is embedded to compare an inputted query sequence with WGS and 16S sequences of random samples, as well as assembled pseudochromosomes of certain species. For metadata, several statistical tests are embedded to test significance of variable relationships. The user also has access to built-in supervised and unsupervised machine learning algorithms, including principal component analysis, k-NN classificiation, and random forest. </p>
+		<br>
+		<form method = "post">
+			<input class="btn btn-primary btn-dark btn-lg" style = "background-color: #9F0CC8; border-color: #9F0CC8; font-size: 30px; border-radius: 10px; width:30%;" type = "submit" value = "Get Started!" />
+		</form>
+		<br>
+	</div>
+	<!-- Slideshow container -->
+	<div class= "col" style = "text-align: center; border-radius: 10px;">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<style> .mySlides {display:none;}
+		</style>
+
+		<div class="w3-content w3-display-container">
+			<img class="mySlides" src="static/images/slideshow/graph1.jpg" style="width:100%">
+			<img class="mySlides" src="static/images/slideshow/graph2.jpg" style="width:100%">
+			<img class="mySlides" src="static/images/slideshow/graph3.jpg" style="width:100%">
+			<img class="mySlides" src="static/images/slideshow/graph4.jpg" style="width:100%">
+
+			<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+			<button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+		</div>
+
+		<script>
+			var slideIndex = 1;
+			showDivs(slideIndex);
+
+			function plusDivs(n) {
+				showDivs(slideIndex += n);
+			}
+
+			function showDivementsByClassName("mySlides");
+				var i;
+				var x = document.getElementsByClassName("mySlides");
+				if (n > x.length) {slideIndex = 1}
+					if (n < 1) {slideIndex = x.length} ;
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = "none";
+				}
+				x[slideIndex-1].style.display = "block";
+			}
+		</script>
+	</div>
+</div>
+
+<br>
+
+
+{% endblock %}
