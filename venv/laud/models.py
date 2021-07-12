@@ -14,3 +14,5 @@ def load_user(user_id):
 class Metadata(db.Model):
    __table__ = db.Model.metadata.tables['dataset']
     
+class _16S(db.Model):
+    __table__ = db.Model.metadata.tables['16s_to_subj_id']

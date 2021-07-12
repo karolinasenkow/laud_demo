@@ -67,3 +67,7 @@ class ChoiceForm(FlaskForm):
     species_result=SelectField('Species', choices=species_choice, default=None)
     cure_result=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField('Submit')
+
+class _16SID(FlaskForm):
+     FASTA_ID=StringField('BLAST hit:', validators=[DataRequired(),Length(max=100)])
+     submit = SubmitField('Submit')

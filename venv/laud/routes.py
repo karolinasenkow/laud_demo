@@ -3,8 +3,8 @@ from laud import app, db, bcrypt, blast
 import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
-from laud.models import Metadata
-from laud.forms import ChoiceForm
+from laud.models import Metadata, _16S
+from laud.forms import ChoiceForm, _16SID
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -64,26 +64,56 @@ def adv_sql():
 def home():
     if request.method == "POST":
         if request.form['post1']:
-            with open(os.path.join(path + '\laud', 'query.txt'), 'w') as query: # query output file
+            with open(os.path.join(path + '/laud', 'query.txt'), 'w') as query: # query output file
                 input1 = request.form["post1"]
                 query.write(input1)
         if request.form["radiobutton"]:
             option = request.form['radiobutton'] # get value of radio button
-            if option == 'option1':
+            if option == 'option0':
                 return redirect(url_for("command_server0", command=command_server0))
-            else:
+            elif option == 'option1':
                 return redirect(url_for("command_server1", command=command_server1))
+            elif option == 'option2':
+                return redirect(url_for("command_server2", command=command_server2))
     else:
-        return render_template("index.html")
+         return render_template("index.html")
+
+@app.route("/16S", methods=["POST", "GET"])
+def _16S_blast_id():
+        form = _16SID()
+        if form.validate_on_submit():
+            sql_query = "SELECT subject_id FROM 16s_to_subj_id WHERE FASTA_ID = '" + form.FASTA_ID.data + "';"
+            cursor = db.session.execute(sql_query)
+            row = ''
+            returnString = str(row)
+            row = cursor.fetchone()
+            while row is not None:
+                returnString += "\n" + str(row)
+                row = cursor.fetchone()
+            posts = _16S.query.all()
+            return render_template('sql_example.html', title='SQLExample', returnString=returnString,outString=posts)
+        return render_template("16s_to_sub_id.html", title='16S Subject ID', form=form, legend='16S Subject ID')
 
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
 
 @app.route('/command0/<command>')
 def command_server0(command):
-    return run_command('python ' + path + '/laud/blast.py -d 0')
+    run_command('python3 ' + path + '/laud/blast.py -d 0')
+    with open(path + "/laud/16S_blast_result.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)
 
 @app.route('/command1/<command>')
 def command_server1(command):
-    return run_command('python ' + path + '/laud/blast.py -d 1')
+    run_command('python3 ' + path + '/laud/blast.py -d 1')
+    with open(path + "/laud/wgs_blast_result.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)
 
+@app.route('/command2/<command>')
+def command_server2(command):
+    run_command('python3 ' + path + '/laud/blast.py -d 2')
+    with open(path + "/laud/assembled_contig_blast_result.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)

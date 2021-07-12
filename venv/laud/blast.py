@@ -2,18 +2,19 @@ import os
 
 # set path
 path = os.getcwd()
-path = path + '\\laud'
+path = path + '/laud'
 
-def test0():
-    os.system('makeblastdb -in ' + path + '\\16S_db.fasta -out ' + path + '\\16S -title 16S -dbtype nucl')
-    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\16S')
-    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\16S -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle"')
+def _16S():
+    os.system('makeblastdb -in ' + path + '/16S.fasta -out ' + path + '/16S -title 16S -dbtype nucl')
+    os.system('blastn -query ' + path + '/query.txt -db ' + path + '/16S > ' + path + '/16S_blast_result.txt')
 
-def test1():
-    os.system('makeblastdb -in ' + path + '\\bacterial_genome.fna -out ' + path + '\\bacteria -title bacteria -dbtype nucl')
-    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\bacteria')
-    os.system('blastn -query ' + path + '\\query.txt -db ' + path + '\\bacteria -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle"')
+def WGS():
+    os.system('makeblastdb -in ' + path + '/wgs.fasta -out ' + path + '/wgs -title wgs -dbtype nucl')
+    os.system('blastn -query ' + path + '/query.txt -db ' + path + '/wgs > ' + path + '/wgs_blast_result.txt')
 
+def assembled_contigs():
+    os.system('makeblastdb -in ' + path + '/assembled_contigs.fasta -out ' + path + '/assembled_contigs -title assembled_contigs -dbtype nucl')
+    os.system('blastn -query ' + path + '/query.txt -db ' + path + '/assembled_contigs > ' + path + '/assembled_contig_blast_result.txt')
 
 if __name__ == '__main__':
     import argparse
@@ -21,17 +22,19 @@ if __name__ == '__main__':
     args = argparse.Namespace
 
     parser = argparse.ArgumentParser(description='Choose database.') 
-    parser.add_argument('--download','-d', type=int, required=False, dest="download",help='0 for 16S, 1 for bacterial genome data')
+    parser.add_argument('--download','-d', type=int, required=False, dest="download",help='0 for 16S, 1 for whole genome sequencing data, 2 for assembled contigs')
 
     args = parser.parse_args()
 
     choice = args.download
     if choice == 0:
-        test0()
+        _16S()
 
     elif choice == 1:
-        test1()
-    else:
-        print("Please choose 0 for download and 1 for test data")
+        WGS()
 
-#os.system('blastn -query ' + path + '\\query.txt' +  ' -subject ' + path + '\\subject.txt')
+    elif choice == 2:
+        assembled_contigs()
+
+    else:
+        print("0 for 16S, 1 for whole genome sequencing data, 2 for assembled contigs")
