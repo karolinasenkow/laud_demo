@@ -22,35 +22,35 @@ sample_id1 = list()
 for row in sample_id:
     rowDict=row._asdict()
     sample_id1.append(rowDict)
-sample_choice = [(None,"")]+[(row['sample_id'],row['sample_id']) for row in sample_id1]
+sample_choice = [(row['sample_id'],row['sample_id']) for row in sample_id1]
 
 # subject id
 subject_id1 = list()
 for row in subject_id:
     rowDict=row._asdict()
     subject_id1.append(rowDict)
-subject_choice = [(None,"")]+[(row['subject_id'],row['subject_id']) for row in subject_id1]
+subject_choice = [(row['subject_id'],row['subject_id']) for row in subject_id1]
 
 # event
 event1 = list()
 for row in event:
     rowDict=row._asdict()
     event1.append(rowDict)
-event_choice = [(None,"")]+[(row['event'],row['event']) for row in event1]
+event_choice = [(row['event'],row['event']) for row in event1]
 
 # taxa type
 taxa_type1=list()
 for row in taxa_type:
     rowDict=row._asdict()
     taxa_type1.append(rowDict)
-type_choice = [(None, "")]+[(row['taxa_type'],row['taxa_type']) for row in taxa_type1]
+type_choice = [(row['taxa_type'],row['taxa_type']) for row in taxa_type1]
 
 # taxa name
 species1=list()
 for row in species:
     rowDict=row._asdict()
     species1.append(rowDict)
-species_choice = [(None, "")]+[(row['taxa_name'],row['taxa_name']) for row in species1]
+species_choice = [(row['taxa_name'],row['taxa_name']) for row in species1]
 
 # cure status
 cure1=list()
