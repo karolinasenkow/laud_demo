@@ -60,12 +60,12 @@ for row in cure:
 cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
 
 class ChoiceForm(FlaskForm):
-    sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
-    subject_result=SelectField('Subject ID', choices=subject_choice, default=None)
+    #sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
+    #subject_result=SelectField('Subject ID', choices=subject_choice, default=None)
     event_result=SelectField('Event', choices=event_choice, default=None)
-    type_result=SelectField('Taxa Type', choices=type_choice, default=None)
+    #type_result=SelectField('Taxa Type', choices=type_choice, default=None)
     species_result=SelectField('Species', choices=species_choice, default=None)
-    cure_result=SelectField('Cure Status', choices=cure_choice, default='')
+    #cure_result=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField('Submit')
 
 class _16SID(FlaskForm):
