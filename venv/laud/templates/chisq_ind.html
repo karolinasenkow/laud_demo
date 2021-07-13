@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class = "row">
+	<div class= "column">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<fieldset class = "form-group">
+				<legend class = "border-bottom mb-4">{{legend}} </legend>
+				{% if legend == "Chi-Square Test of Independence" %}
+				<br>
+				<p> Choose a species: </p>
+				<div class = "form-group">
+					{{ form.species_result.label(class = "form-control-label")}}
+					{% if form.species_result.errors %}
+					{{ form.species_result(class = "form-control form-control-lg is-invalid")}}
+					<div class = "invalid-feedback">
+						{% for error in form.species_result.errors %}
+						<span> {{ error }} </span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ form.species_result(class = "form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<br> <br>
+				<p> Choose another category: </p>
+				<div class = "form-group">
+					{{ form.var.label(class = "form-check-label")}}
+					{% if form.var.errors %}
+					{{ form.var(class = "form-check form-check-lg is-invalid")}}
+					<div class = "invalid-feedback">
+						{% for error in form.var.errors %}
+						<span> {{ error }} </span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ form.var(class = "form-check form-check-lg") }}
+					{% endif %}
+				</div>
+				<br> <br>
+				<p> Choose more filters: </p>
+                                <div class = "form-group">
+                                        {{ form.subject_filter.label(class = "form-check-label")}}
+                                        {% if form.subject_filter.errors %}
+                                        {{ form.subject_filter(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.subject_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.subject_filter(class = "form-check form-check-lg") }}
+                                        {% endif %}
+				</div>
+				 <div class = "form-group">
+                                        {{ form.sample_filter.label(class = "form-check-label")}}
+                                        {% if form.sample_filter.errors %}
+                                        {{ form.sample_filter(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.sample_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.sample_filter(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+				 <div class = "form-group">
+                                        {{ form.event_filter.label(class = "form-check-label")}}
+                                        {% if form.event_filter.errors %}
+                                        {{ form.event_filter(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.event_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.event_filter(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+				 <div class = "form-group">
+                                        {{ form.type_filter.label(class = "form-check-label")}}
+                                        {% if form.type_filter.errors %}
+                                        {{ form.type_filter(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.type_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.type_filter(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+				 <div class = "form-group">
+                                        {{ form.cure_filter.label(class = "form-check-label")}}
+                                        {% if form.cure_filter.errors %}
+                                        {{ form.cure_filter(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.cure_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.cure_filter(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+
+				{% endif %}
+
+			</fieldset>
+			<div class = "form-group">
+				{{ form.submit(class = "btn btn-outline-info")}}
+			</div>
+
+
+
+		</form>
+	</div>
+</div>
+
+{% endblock %}
