@@ -1,16 +1,18 @@
 import pandas as pd
+import numpy as np
 from scipy.stats import chi2_contingency
 import sys
 
-def chisq_ind(species, var):
-    #data = pd.read_csv("df.csv")
-    #contingency = pd.crosstab(data[var1], data[var2])
-    #c, p, dof, expected = chi2_contingency(contingency)
-    #print(contingency)
-    #print("\n")
-    #print("Test statistic: " + str(c) + "\n" + "P-value: " + str(p) + "\n" + "Degrees Freedom: " + str(dof))
-    f = open("result.txt", "w+")
-    f.write(species + "\n" + var)
+def chisq_ind(var):
+    data = pd.read_csv("laud/df.csv")
+    data["present"] = np.array(["yes" for i in range(len(data))])
+    data.loc[data["taxa_count"] == 0, ["present"]] = "no"
+    contingency = pd.crosstab(data[var], data["present"])
+    c, p, dof, expected = chi2_contingency(contingency)
+    string = "Test statistic: " + str(c) + "\n" + "P-value: " + str(p) + "\n" + "Degrees Freedom: " + str(dof)
+    f = open("laud/result.txt", "w+")
+    f.write(str(contingency))
+    f.write("\n"+ string)
     f.close()
 
-chisq_ind(str(sys.argv[1]), str(sys.argv[2]))
+chisq_ind(str(sys.argv[1]))
