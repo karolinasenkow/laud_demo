@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, DateField, SelectField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, DateField, SelectField, HiddenField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError,Regexp
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from laud import db
@@ -22,42 +22,43 @@ sample_id1 = list()
 for row in sample_id:
     rowDict=row._asdict()
     sample_id1.append(rowDict)
-sample_choice = [(row['sample_id'],row['sample_id']) for row in sample_id1]
+sample_choice = [("%%","")] +[(row['sample_id'],row['sample_id']) for row in sample_id1]
 
 # subject id
 subject_id1 = list()
 for row in subject_id:
     rowDict=row._asdict()
     subject_id1.append(rowDict)
-subject_choice = [("%%","")]+[(row['subject_id'],row['subject_id']) for row in subject_id1]
+subject_choice = [("%%", "")] +[(row['subject_id'],row['subject_id']) for row in subject_id1]
 
 # event
 event1 = list()
 for row in event:
     rowDict=row._asdict()
     event1.append(rowDict)
-event_choice = [("%%","")]+[(row['event'],row['event']) for row in event1]
+event_choice = [("%%", "")] +[(row['event'],row['event']) for row in event1]
 
 # taxa type
 taxa_type1=list()
 for row in taxa_type:
     rowDict=row._asdict()
     taxa_type1.append(rowDict)
-type_choice = [(row['taxa_type'],row['taxa_type']) for row in taxa_type1]
+type_choice = [("%%", "")] + [(row['taxa_type'],row['taxa_type']) for row in taxa_type1]
 
 # taxa name
 species1=list()
 for row in species:
     rowDict=row._asdict()
     species1.append(rowDict)
-species_choice = [("%%","")]+[(row['taxa_name'],row['taxa_name']) for row in species1]
+species_choice = [("%%","")]+ [(row['taxa_name'],row['taxa_name']) for row in species1]
 
 # cure status
 cure1=list()
 for row in cure:
     rowDict=row._asdict()
     cure1.append(rowDict)
-cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
+cure_choice = [("%%","")] + [(row['cure_status'],row['cure_status']) for row in cure1]
+
 
 class ChoiceForm(FlaskForm):
     #sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
@@ -69,5 +70,17 @@ class ChoiceForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class _16SID(FlaskForm):
-     FASTA_ID=StringField('BLAST hit:', validators=[DataRequired(),Length(max=100)])
-     submit = SubmitField('Submit')
+    FASTA_ID=StringField('BLAST hit:', validators=[DataRequired(),Length(max=100)])
+    submit = SubmitField('Submit')
+
+
+class ChiForm(FlaskForm):
+    species_result = SelectField("Species", choices = species_choice, default = None)
+    var = RadioField("Categories", choices = [("event", "Event"), ("cure", "Cure Status")])
+    subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
+    sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
+    event_filter=SelectField('Event', choices=event_choice, default=None)
+    type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
+    cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
+    submit = SubmitField("Submit")
+
