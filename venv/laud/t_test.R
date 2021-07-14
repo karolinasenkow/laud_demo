@@ -5,7 +5,7 @@ attach(data)
 
 # Start writing to an output file
 output <- paste(path, 'laud', 'analysis-output.txt', sep="/")
-t_test_boxplot <- paste(path, 'laud', 'templates', 'boxplot.png', sep="/")
+t_test_boxplot <- paste(path, 'laud', 'static', 'images', 'graphs', 'boxplot.png', sep="/")
 
 # 1. Open jpeg file
 png(t_test_boxplot)
