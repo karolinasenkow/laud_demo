@@ -57,7 +57,7 @@ cure1=list()
 for row in cure:
     rowDict=row._asdict()
     cure1.append(rowDict)
-cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
+cure_choice = [("%%","")] + [(row['cure_status'],row['cure_status']) for row in cure1]
 
 
 class ChoiceForm(FlaskForm):
