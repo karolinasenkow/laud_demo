@@ -173,6 +173,15 @@ def heatmap():
 def results():
     return render_template("results.html", content = session["content"])
 
+@app.route("/stats_results")
+def stats_results():
+    return render_template("stats_results.html", content = session["content2"])
+
+@app.route("/heatmap_results")
+def heatmap_results():
+    return render_template("heatmap_results.html")
+
+
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
 
@@ -203,14 +212,16 @@ def command_server3(command):
     with open(path + "/laud/result.txt", "r") as file:
         session["content"] = file.read()
     return redirect(url_for("results"))
+    #return render_template("results.html", content = session["content"])
 
 
 @app.route("/command4/<command>")
 def command_server4(command):
     run_command("Rscript " + path + "/laud/t_test.R")
     with open(path + "/laud/analysis-output.txt","r") as file:
-        content = file.read()
-    return render_template("stats_results.html", content = content)
+        session["content2"] = file.read()
+    #return render_template("stats_results.html", content = content)
+    return redirect(url_for("stats_results"))
 
 
 @app.route("/command5/<command>")
@@ -221,5 +232,6 @@ def command_server5(command):
 @app.route("/command6/<command>")
 def command_server6(command):
     run_command("Rscript " + path + "/laud/heatmap.R " + session["meth"])
-    return render_template("heatmap_results.html")
+    #return render_template("heatmap_results.html")
+    return redirect(url_for("heatmap_results"))
 
