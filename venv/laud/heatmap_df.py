@@ -19,5 +19,7 @@ for sample in unique_samples:
         count = [row[2]]
         new_row[species] = [count]
     heat_df = heat_df.append(new_row)
+heat_df = heat_df.reset_index(drop = True)
 
-heat_df.to_csv("laud/heat_df.csv")
+
+heat_df.to_csv("laud/heat_df.csv", index = False)
