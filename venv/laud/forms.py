@@ -76,13 +76,11 @@ class _16SID(FlaskForm):
 
 class ChiForm(FlaskForm):
     species_result = SelectField("Species", choices = species_choice, default = None)
-    #cur_results = SelectMultipleField("Cure Status", choices = cure_choice, default = None)
-    var = RadioField("Categories", choices = [("event", "Event"), ("cure_status", "Cure Status")])
+    #var = RadioField("Categories", choices = [("event", "Event"), ("cure_status", "Cure Status")])
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
-    cure_filter=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField("Submit")
 
 class t_testForm(FlaskForm):
@@ -90,3 +88,14 @@ class t_testForm(FlaskForm):
     cure_result1=SelectField('Cure Status', choices=cure_choice, default='')
     cure_result2=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField("Submit")
+
+
+class HeatForm(FlaskForm):
+    method = RadioField("Methods", choices = [("pearson", "Pearson Correlation"), ("spearman", "Spearman Correlation")])
+    subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
+    sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
+    event_filter=SelectField('Event', choices=event_choice, default=None)
+    type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
+    cure_filter=SelectField('Cure Status', choices=cure_choice, default='')
+    submit = SubmitField("Submit")
+
