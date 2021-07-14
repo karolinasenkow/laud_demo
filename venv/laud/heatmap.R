@@ -32,4 +32,4 @@ heat_map <- function(meth){
 }
 
 heat_map(args[1])
-ggsave("laud/heatmap.png")
+ggsave("laud/static/images/graphs/heatmap.png")
