@@ -50,14 +50,14 @@ species1=list()
 for row in species:
     rowDict=row._asdict()
     species1.append(rowDict)
-species_choice = [("%%","")]+ [(row['taxa_name'],row['taxa_name']) for row in species1]
+species_choice = [("%%","")] +[(row['taxa_name'],row['taxa_name']) for row in species1]
 
 # cure status
 cure1=list()
 for row in cure:
     rowDict=row._asdict()
     cure1.append(rowDict)
-cure_choice = [("%%","")] + [(row['cure_status'],row['cure_status']) for row in cure1]
+cure_choice = [(row['cure_status'],row['cure_status']) for row in cure1]
 
 
 class ChoiceForm(FlaskForm):
@@ -76,11 +76,17 @@ class _16SID(FlaskForm):
 
 class ChiForm(FlaskForm):
     species_result = SelectField("Species", choices = species_choice, default = None)
-    var = RadioField("Categories", choices = [("event", "Event"), ("cure", "Cure Status")])
+    #cur_results = SelectMultipleField("Cure Status", choices = cure_choice, default = None)
+    var = RadioField("Categories", choices = [("event", "Event"), ("cure_status", "Cure Status")])
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
-    cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
+    cure_filter=SelectField('Cure Status', choices=cure_choice, default='')
     submit = SubmitField("Submit")
 
+class t_testForm(FlaskForm):
+    species_result = SelectField("Species", choices = species_choice, default = None)
+    cure_result1=SelectField('Cure Status', choices=cure_choice, default='')
+    cure_result2=SelectField('Cure Status', choices=cure_choice, default='')
+    submit = SubmitField("Submit")

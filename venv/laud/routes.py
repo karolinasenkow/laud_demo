@@ -4,7 +4,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -103,8 +103,9 @@ def chisq_ind():
     if form.validate_on_submit():
         session["species"] = form.species_result.data
         session["var"] = form.var.data
+        #session["cures"] = form.cure_results.data
         
-        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count = "0" union all select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count = "0";'
+        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count = "0" union all select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count != "0";'
         
         connection = db.session.connection()
         posts = connection.execute(sql_query)
@@ -126,15 +127,29 @@ def chisq_ind():
         return redirect(url_for("command_server3", command = command_server3))
     return render_template("chisq_ind.html", title = "Chi-Square Test of Independence", form = form, legend = "Chi-Square Test of Independence")
 
+@app.route("/t_test", methods=["POST","GET"])
+def t_test():
+    form = t_testForm()
+    if form.validate_on_submit():
+        sql_query = "SELECT taxa_name, taxa_count, cure_status FROM dataset WHERE taxa_name LIKE '" + form.species_result.data + "' AND (cure_status LIKE '" + form.cure_result1.data + "' OR cure_status LIKE '" + form.cure_result2.data + "');"
+        cursor = db.session.execute(sql_query)
+
+        with open("laud/t_test_df.csv", "w+", newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = ["taxa_name", "taxa_count", "cure_status"])
+            writer.writeheader()
+            for row in cursor:
+                row_data = {
+                        "taxa_name": row.taxa_name,
+                        "taxa_count": row.taxa_count,
+                        "cure_status": row.cure_status,
+                        }
+                writer.writerow(row_data)
+        return redirect(url_for("command_server4", command = command_server4))
+    return render_template("t_test.html", title = "T Test", form = form, legend = "T Test")
+
 @app.route("/results")
 def results():
     return render_template("results.html", content = session["content"])
-
-
-@app.route("/test", methods = ["POST", "GET"])
-def test():
-    return redirect(url_for("command_server4", command = command_server4))
-
 
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
@@ -162,14 +177,16 @@ def command_server2(command):
 
 @app.route("/command3/<command>")
 def command_server3(command):
-    run_command("python3 " + path + "/laud/chisq_ind.py " + session["species"] + " " + session["var"])
-    with open(path + "/result.txt", "r") as file:
+    run_command("python3 " + path + "/laud/chisq_ind.py " + session["var"])
+    with open(path + "/laud/result.txt", "r") as file:
         session["content"] = file.read()
     return redirect(url_for("results"))
 
 
 @app.route("/command4/<command>")
 def command_server4(command):
-    return run_command("python3 " + path + "/laud/test.py")
-
+    run_command("Rscript " + path + "/laud/t_test.R")
+    with open(path + "/laud/analysis-output.txt","r") as file:
+        content = file.read()
+    return render_template("stats_results.html", content = content)
 
