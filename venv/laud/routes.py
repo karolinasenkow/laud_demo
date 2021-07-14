@@ -4,7 +4,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -102,11 +102,10 @@ def chisq_ind():
     form = ChiForm()
     if form.validate_on_submit():
         session["species"] = form.species_result.data
-        session["var"] = form.var.data
-        #session["cures"] = form.cure_results.data
+       
+        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and taxa_name like "'+form.species_result.data+'" ;'
         
-        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count = "0" union all select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'" and taxa_name like "'+form.species_result.data+'" and taxa_count != "0";'
-        
+
         connection = db.session.connection()
         posts = connection.execute(sql_query)
 
@@ -121,7 +120,7 @@ def chisq_ind():
                         "taxa_type": row.taxa_type,
                         "taxa_name": row.taxa_name,
                         "taxa_count": row.taxa_count,
-                        "cure_status": row.cure_status,
+                        "cure_status": row.cure_status
                         }
                 writer.writerow(row_data)
         return redirect(url_for("command_server3", command = command_server3))
@@ -141,11 +140,34 @@ def t_test():
                 row_data = {
                         "taxa_name": row.taxa_name,
                         "taxa_count": row.taxa_count,
-                        "cure_status": row.cure_status,
+                        "cure_status": row.cure_status
                         }
                 writer.writerow(row_data)
         return redirect(url_for("command_server4", command = command_server4))
     return render_template("t_test.html", title = "T Test", form = form, legend = "T Test")
+
+
+@app.route("/heatmap", methods = ["POST", "GET"])
+def heatmap():
+    form = HeatForm()
+    if form.validate_on_submit():
+        session["meth"] = form.method.data
+        sql_query = 'select sample_id, taxa_name, taxa_count from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
+        connection = db.session.connection()
+        posts = connection.execute(sql_query)
+        with open("laud/df.csv", "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = ["sample_id", "taxa_name", "taxa_count"])
+            writer.writeheader()
+            for row in posts:
+                row_data = {
+                        "sample_id": row.sample_id,
+			"taxa_name": row.taxa_name,
+			"taxa_count": row.taxa_count
+                        }
+                writer.writerow(row_data)
+        return redirect(url_for("command_server5", command = command_server5))
+    return render_template("heatmap.html", title = "Taxa Heat Map", form = form, legend = "Taxa Heat Map")
+
 
 @app.route("/results")
 def results():
@@ -177,7 +199,7 @@ def command_server2(command):
 
 @app.route("/command3/<command>")
 def command_server3(command):
-    run_command("python3 " + path + "/laud/chisq_ind.py " + session["var"])
+    run_command("python3 " + path + "/laud/chisq_ind.py " )
     with open(path + "/laud/result.txt", "r") as file:
         session["content"] = file.read()
     return redirect(url_for("results"))
@@ -189,4 +211,15 @@ def command_server4(command):
     with open(path + "/laud/analysis-output.txt","r") as file:
         content = file.read()
     return render_template("stats_results.html", content = content)
+
+
+@app.route("/command5/<command>")
+def command_server5(command):
+    run_command("python3 " + path + "/laud/heatmap_df.py")
+    return redirect(url_for("command_server6", command = command_server6))
+
+@app.route("/command6/<command>")
+def command_server6(command):
+    run_command("Rscript " + path + "/laud/heatmap.R " + session["meth"])
+    return render_template("heatmap_results.html")
 
