@@ -93,7 +93,6 @@ class t_testForm(FlaskForm):
 class HeatForm(FlaskForm):
     method = RadioField("Methods", choices = [("pearson", "Pearson Correlation"), ("spearman", "Spearman Correlation")])
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
-    sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
     cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
