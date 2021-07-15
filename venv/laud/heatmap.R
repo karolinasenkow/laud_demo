@@ -25,7 +25,7 @@ heat_map <- function(meth){
           axis.text.x = element_text(angle = 90, face = "bold",colour = "grey25", vjust = 0.5, hjust = 0), 
           panel.background = element_blank(), panel.border = element_rect(fill = NA, colour = NA), 
           axis.ticks = element_blank()) + 
-    labs(x= "", y = "", fill = "Spearman's Correlation") + 
+    labs(x= "", y = "", fill = "Correlation") + 
     scale_x_discrete(position = "top") +
     scale_y_discrete(limits = rev(levels(ccm$species)))
   
