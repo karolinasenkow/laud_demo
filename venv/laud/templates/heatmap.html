@@ -25,68 +25,55 @@
 				<br> <br>
 				<p> Choose filters: </p>
                                 <div class = "form-group">
-                                        {{ form.subject_filter.label(class = "form-check-label")}}
+                                        {{ form.subject_filter.label(class = "form-control-label")}}
                                         {% if form.subject_filter.errors %}
-                                        {{ form.subject_filter(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.subject_filter(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.subject_filter.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.subject_filter(class = "form-check form-check-lg") }}
+                                        {{ form.subject_filter(class = "form-control form-control-lg") }}
                                         {% endif %}
 				</div>
 				 <div class = "form-group">
-                                        {{ form.sample_filter.label(class = "form-check-label")}}
-                                        {% if form.sample_filter.errors %}
-                                        {{ form.sample_filter(class = "form-check form-check-lg is-invalid")}}
-                                        <div class = "invalid-feedback">
-                                                {% for error in form.sample_filter.errors %}
-                                                <span> {{ error }} </span>
-                                                {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ form.sample_filter(class = "form-check form-check-lg") }}
-                                        {% endif %}
-                                </div>
-				 <div class = "form-group">
-                                        {{ form.event_filter.label(class = "form-check-label")}}
+                                        {{ form.event_filter.label(class = "form-control-label")}}
                                         {% if form.event_filter.errors %}
-                                        {{ form.event_filter(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.event_filter(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.event_filter.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.event_filter(class = "form-check form-check-lg") }}
+                                        {{ form.event_filter(class = "form-control form-control-lg") }}
                                         {% endif %}
                                 </div>
 				 <div class = "form-group">
-                                        {{ form.type_filter.label(class = "form-check-label")}}
+                                        {{ form.type_filter.label(class = "form-control-label")}}
                                         {% if form.type_filter.errors %}
-                                        {{ form.type_filter(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.type_filter(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.type_filter.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.type_filter(class = "form-check form-check-lg") }}
+                                        {{ form.type_filter(class = "form-control form-control-lg") }}
                                         {% endif %}
                                 </div>
 				 <div class = "form-group">
-                                        {{ form.cure_filter.label(class = "form-check-label")}}
+                                        {{ form.cure_filter.label(class = "form-control-label")}}
                                         {% if form.cure_filter.errors %}
-                                        {{ form.cure_filter(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.cure_filter(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.cure_filter.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.cure_filter(class = "form-check form-check-lg") }}
+                                        {{ form.cure_filter(class = "form-control form-control-lg") }}
                                         {% endif %}
                                 </div>
 

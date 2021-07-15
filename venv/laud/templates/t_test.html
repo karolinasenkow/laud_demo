@@ -11,46 +11,46 @@
 				<br>
 				<p> Choose a species: </p>
 				<div class = "form-group">
-                                        {{ form.species_result.label(class = "form-check-label")}}
+                                        {{ form.species_result.label(class = "form-control-label")}}
                                         {% if form.species_result.errors %}
-                                        {{ form.species_result(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.species_result(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.species_result.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.species_result(class = "form-check form-check-lg") }}
+                                        {{ form.species_result(class = "form-control form-control-lg") }}
                                         {% endif %}
                                 </div>
 				<br> <br>
 
                 <p> Choose two different cure statuses: </p>
                 <div class = "form-group">
-                                    {{ form.cure_result1.label(class = "form-check-label")}}
+                                    {{ form.cure_result1.label(class = "form-control-label")}}
                                     {% if form.cure_result1.errors %}
-                                    {{ form.cure_result1(class = "form-check form-check-lg is-invalid")}}
+                                    {{ form.cure_result1(class = "form-control form-control-lg is-invalid")}}
                                     <div class = "invalid-feedback">
                                             {% for error in form.cure_result1.errors %}
                                             <span> {{ error }} </span>
                                             {% endfor %}
                                     </div>
                                     {% else %}
-                                    {{ form.cure_result1(class = "form-check form-check-lg") }}
+                                    {{ form.cure_result1(class = "form-control form-control-lg") }}
                                     {% endif %}
                             </div>
                                 
 				 <div class = "form-group">
-                                        {{ form.cure_result2.label(class = "form-check-label")}}
+                                        {{ form.cure_result2.label(class = "form-control-label")}}
                                         {% if form.cure_result2.errors %}
-                                        {{ form.cure_result2(class = "form-check form-check-lg is-invalid")}}
+                                        {{ form.cure_result2(class = "form-control form-control-lg is-invalid")}}
                                         <div class = "invalid-feedback">
                                                 {% for error in form.cure_result2.errors %}
                                                 <span> {{ error }} </span>
                                                 {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.cure_result2(class = "form-check form-check-lg") }}
+                                        {{ form.cure_result2(class = "form-control form-control-lg") }}
                                         {% endif %}
                                 </div>
 
