@@ -173,7 +173,7 @@ def dim_red():
     form = DimForm()
     if form.validate_on_submit():
         session["dim_meth"] = form.dim_meth.data
-        sql_query =  'select sample_id, taxa_name, taxa_count from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
+        sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
         connection = db.session.connection()
         posts = connection.execute(sql_query)
         with open("laud/df.csv", "w+") as csvfile:
@@ -259,7 +259,7 @@ def command_server6(command):
 
 @app.route("/command7/<command>")
 def command_server7(command):
-    run_command("python3 " + path + "/laud/heatmap_df.py")
+    run_command("python3 " + path + "/laud/dim_red_df.py")
     return redirect(url_for("command_server8", command = command_server8))
 
 @app.route("/command8/<command>")
