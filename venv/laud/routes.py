@@ -152,7 +152,7 @@ def heatmap():
     form = HeatForm()
     if form.validate_on_submit():
         session["meth"] = form.method.data
-        sql_query = 'select sample_id, taxa_name, taxa_count from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
+        sql_query = 'select sample_id, taxa_name, taxa_count from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
         connection = db.session.connection()
         posts = connection.execute(sql_query)
         with open("laud/df.csv", "w+") as csvfile:
