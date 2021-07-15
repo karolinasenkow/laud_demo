@@ -4,7 +4,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, DimForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -168,6 +168,27 @@ def heatmap():
         return redirect(url_for("command_server5", command = command_server5))
     return render_template("heatmap.html", title = "Taxa Heat Map", form = form, legend = "Taxa Heat Map")
 
+@app.route("/dim_red", methods = ["POST", "GET"])
+def dim_red():
+    form = DimForm()
+    if form.validate_on_submit():
+        session["dim_meth"] = form.dim_meth.data
+        sql_query =  'select sample_id, taxa_name, taxa_count from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
+        connection = db.session.connection()
+        posts = connection.execute(sql_query)
+        with open("laud/df.csv", "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count"])
+            writer.writeheader()
+            for row in posts:
+                row_data = {
+                        "sample_id": row.sample_id,
+                        "taxa_name": row.taxa_name,
+                        "taxa_count": row.taxa_count
+                        }
+                writer.writerow(row_data)
+        return redirect(url_for("command_server7", command = command_server7))
+    return render_template("dim_red.html", title = "Taxa Dimensionality Reduction", form = form, legend = "Taxa Dimensionality Reduction")
+
 
 @app.route("/results")
 def results():
@@ -180,6 +201,10 @@ def stats_results():
 @app.route("/heatmap_results")
 def heatmap_results():
     return render_template("heatmap_results.html")
+
+@app.route("/dim_red_results")
+def dim_red_results():
+    return render_template("dim_red_results.html")
 
 
 def run_command(command):
@@ -212,7 +237,6 @@ def command_server3(command):
     with open(path + "/laud/result.txt", "r") as file:
         session["content"] = file.read()
     return redirect(url_for("results"))
-    #return render_template("results.html", content = session["content"])
 
 
 @app.route("/command4/<command>")
@@ -220,7 +244,6 @@ def command_server4(command):
     run_command("Rscript " + path + "/laud/t_test.R")
     with open(path + "/laud/analysis-output.txt","r") as file:
         session["content2"] = file.read()
-    #return render_template("stats_results.html", content = content)
     return redirect(url_for("stats_results"))
 
 
@@ -232,6 +255,21 @@ def command_server5(command):
 @app.route("/command6/<command>")
 def command_server6(command):
     run_command("Rscript " + path + "/laud/heatmap.R " + session["meth"])
-    #return render_template("heatmap_results.html")
     return redirect(url_for("heatmap_results"))
+
+@app.route("/command7/<command>")
+def command_server7(command):
+    run_command("python3 " + path + "/laud/heatmap_df.py")
+    return redirect(url_for("command_server8", command = command_server8))
+
+@app.route("/command8/<command>")
+def command_server8(command):
+    run_command("Rscript " + path + "/laud/dim_red.R " + session["dim_meth"])
+    return redirect(url_for("dim_red_results"))
+
+
+@app.route("/clear")
+def clear():
+    session.clear()
+    return redirect(url_for("about"))
 
