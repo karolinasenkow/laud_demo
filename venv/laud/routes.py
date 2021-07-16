@@ -4,7 +4,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, DimForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, DimForm, TestForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -102,8 +102,10 @@ def chisq_ind():
     form = ChiForm()
     if form.validate_on_submit():
         session["species"] = form.species_result.data
-       
-        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and taxa_name like "'+form.species_result.data+'" ;'
+        cure_string = 'cure_status like "' + form.cure_results.data[0]
+        for i in range(1, len(form.cure_results.data)):
+            cure_string += '" OR cure_status like "' + form.cure_results.data[i]
+        sql_query = 'select * from dataset where subject_id like "'+form.subject_filter.data+'" and sample_id like "'+form.sample_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and taxa_name like "'+form.species_result.data+'" and ('+cure_string+'");'
         
 
         connection = db.session.connection()
@@ -173,7 +175,10 @@ def dim_red():
     form = DimForm()
     if form.validate_on_submit():
         session["dim_meth"] = form.dim_meth.data
-        sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and cure_status like "'+form.cure_filter.data+'";'
+        cure_string = 'cure_status like "' + form.cure_results.data[0]
+        for i in range(1, len(form.cure_results.data)):
+            cure_string += '" OR cure_status like "' + form.cure_results.data[i]
+        sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and ('+cure_string+'");'
         connection = db.session.connection()
         posts = connection.execute(sql_query)
         with open("laud/df.csv", "w+") as csvfile:
@@ -273,4 +278,15 @@ def command_server8(command):
 def clear():
     session.clear()
     return redirect(url_for("about"))
+
+
+@app.route("/test", methods = ["POST", "GET"])
+def test():
+    form = TestForm()
+    if form.validate_on_submit():
+        cure_string = 'cure_status like "' + form.cure_results.data[0] 
+        for i in range(1, len(form.cure_results.data)):
+            cure_string += '" OR cure_status like "' + form.cure_results.data[i] 
+        return cure_string
+    return render_template("test.html", title = "Test", form = form, legend = "Test")
 

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, DateField, SelectField, HiddenField, RadioField
+from wtforms import widgets, StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, DateField, SelectField, HiddenField, RadioField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError,Regexp
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from laud import db
@@ -59,6 +59,9 @@ for row in cure:
     cure1.append(rowDict)
 cure_choice = [("%%","")] + [(row['cure_status'],row['cure_status']) for row in cure1]
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 class ChoiceForm(FlaskForm):
     #sample_result=SelectField('Sample ID', choices=sample_choice, default=None)
@@ -77,6 +80,7 @@ class _16SID(FlaskForm):
 class ChiForm(FlaskForm):
     species_result = SelectField("Species", choices = species_choice, default = None)
     #var = RadioField("Categories", choices = [("event", "Event"), ("cure_status", "Cure Status")])
+    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
@@ -100,10 +104,18 @@ class HeatForm(FlaskForm):
 
 class DimForm(FlaskForm):
     dim_meth = RadioField("Methods", choices = [("tsne", "t-SNE"), ("pca", "Principal Component Analysis")])
+    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
-    cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
     submit = SubmitField("Submit")
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+class TestForm(FlaskForm):
+    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    submit = SubmitField("Submit")
 

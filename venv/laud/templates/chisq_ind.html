@@ -23,6 +23,21 @@
 					{% endif %}
 				</div>
 				<br> <br>
+				<p> Choose cure statuses: </p>
+                                <div class = "form-group">
+                                        {{ form.cure_results.label(class = "form-check-label")}}
+                                        {% if form.cure_results.errors %}
+                                        {{ form.cure_results(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.cure_results.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.cure_results(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+				<br> <br>
 				<p> Choose additional filters: </p>
                                 <div class = "form-group">
                                         {{ form.subject_filter.label(class = "form-control-label")}}
