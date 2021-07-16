@@ -8,12 +8,12 @@ library(Rtsne)
 setwd(getwd())
 set.seed(42)
 data <- read.csv("laud/dim_df.csv")
-data1 <- log(data[,3:ncol(data)]) #species
+data1 <- data[,3:ncol(data)] #species
 cure_status <- data[,1] #cure status
 
 
 if (args[1] == "tsne") {
-  tsne <- Rtsne(data1, check_duplicates = FALSE)
+  tsne <- Rtsne(data1, perplexity= 1,  check_duplicates = FALSE)
   tsne_plot <- data.frame(x = tsne$Y[,1], y = tsne$Y[,2], cure_status = cure_status)
   ggplot(tsne_plot, aes(x=x, y=y, color=cure_status)) + 
     geom_point() + 
