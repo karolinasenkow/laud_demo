@@ -177,13 +177,14 @@ def dim_red():
         connection = db.session.connection()
         posts = connection.execute(sql_query)
         with open("laud/df.csv", "w+") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count"])
+            writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count", "cure_status"])
             writer.writeheader()
             for row in posts:
                 row_data = {
                         "sample_id": row.sample_id,
                         "taxa_name": row.taxa_name,
-                        "taxa_count": row.taxa_count
+                        "taxa_count": row.taxa_count,
+                        "cure_status": row.cure_status
                         }
                 writer.writerow(row_data)
         return redirect(url_for("command_server7", command = command_server7))
