@@ -17,7 +17,7 @@ if (args[1] == "tsne") {
   tsne_plot <- data.frame(x = tsne$Y[,1], y = tsne$Y[,2], cure_status = cure_status)
   ggplot(tsne_plot, aes(x=x, y=y, color=cure_status)) + 
     geom_point() + 
-    stat_ellipse(type = "norm")
+    stat_ellipse(type = "norm", geom = "polygon", alpha = 0.3, aes(fill = cure_status))
   ggsave("laud/static/images/graphs/dim_red.png")
 } else {
   pca <- prcomp(data1, center = TRUE, rank = 10) #standardizes the data
