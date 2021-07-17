@@ -10,14 +10,16 @@ unique_samples = np.unique(df["sample_id"]).tolist()
 
 heat_df = pd.DataFrame(columns = new_columns)
 for sample in unique_samples:
-    new_row = pd.DataFrame()
-    new_row["sample_id"] = [sample]
+    new_row1 = pd.DataFrame()
+    new_row1["sample_id"] = [sample]
     tab = df[df["sample_id"] == sample]
-    for i in range(len(tab)):
-        row = tab.iloc[i]
-        species = [row[1]]
-        count = [row[2]]
-        new_row[species] = [count]
+    tab = tab.drop(["sample_id"], axis = 1)
+    new_row2 = tab.transpose()
+    new_header = new_row2.iloc[0]
+    new_row2 = new_row2[1:]
+    new_row2.columns = new_header.values
+    new_row2 = new_row2.reset_index(drop = True)
+    new_row = pd.concat([new_row1, new_row2], axis = 1)
     heat_df = heat_df.append(new_row)
 heat_df = heat_df.reset_index(drop = True)
 
