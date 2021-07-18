@@ -4,7 +4,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, DimForm, TestForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -170,6 +170,31 @@ def heatmap():
         return redirect(url_for("command_server5", command = command_server5))
     return render_template("heatmap.html", title = "Taxa Heat Map", form = form, legend = "Taxa Heat Map")
 
+@app.route("/two_hierch", methods = ["POST", "GET"])
+def two_hierch():
+    form = HeatForm2()
+    if form.validate_on_submit():
+        cure_string = 'cure_status like "' + form.cure_results.data[0]
+        for i in range(1, len(form.cure_results.data)):
+            cure_string += '" OR cure_status like "' + form.cure_results.data[i]
+        sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and ('+cure_string+'");'
+        connection = db.session.connection()
+        posts = connection.execute(sql_query)
+        with open("laud/df.csv", "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count", "cure_status"])
+            writer.writeheader()
+            for row in posts:
+                row_data = {
+                        "sample_id": row.sample_id,
+                        "taxa_name": row.taxa_name,
+                        "taxa_count": row.taxa_count,
+                        "cure_status": row.cure_status
+                        }
+                writer.writerow(row_data)
+        return redirect(url_for("command_server9", command = command_server9))
+    return render_template("two_hierch.html", title = "Two-way Hierarchical Clustering Heatmap", form = form, legend = "Two-way Hierarchical Clustering Heatmap")
+ 
+
 @app.route("/dim_red", methods = ["POST", "GET"])
 def dim_red():
     form = DimForm()
@@ -212,6 +237,9 @@ def heatmap_results():
 def dim_red_results():
     return render_template("dim_red_results.html")
 
+@app.route("/two_hierch_results")
+def two_hierch_results():
+    return render_template("two_hierch_results.html")
 
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
@@ -273,6 +301,15 @@ def command_server8(command):
     run_command("Rscript " + path + "/laud/dim_red.R " + session["dim_meth"])
     return redirect(url_for("dim_red_results"))
 
+@app.route("/command9/<command>")
+def command_server9(command):
+    run_command("python3 " + path + "/laud/dim_red_df.py")
+    return redirect(url_for("command_server10", command = command_server10))
+
+@app.route("/command10/<command>")
+def command_server10(command):
+    run_command("Rscript " + path + "/laud/two_hierch.R")
+    return redirect(url_for("two_hierch_results"))
 
 @app.route("/clear")
 def clear():

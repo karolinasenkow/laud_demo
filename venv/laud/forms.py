@@ -102,6 +102,14 @@ class HeatForm(FlaskForm):
     cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
     submit = SubmitField("Submit")
 
+class HeatForm2(FlaskForm):
+    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
+    event_filter=SelectField('Event', choices=event_choice, default=None)
+    type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
+    submit = SubmitField("Submit")
+
+
 class DimForm(FlaskForm):
     dim_meth = RadioField("Methods", choices = [("tsne", "t-SNE"), ("pca", "Principal Component Analysis")])
     cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
