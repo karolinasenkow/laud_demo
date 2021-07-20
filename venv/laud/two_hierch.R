@@ -1,6 +1,5 @@
 library(pheatmap)
 library(dplyr)
-library(ggplot2)
 
 df <- read.csv("laud/dim_df.csv")
 
@@ -26,9 +25,11 @@ cure_df <- cure_df %>%
   rename(cure_status = `cure_df[y, ]`)
 
 
+path = getwd()
+image_path <- paste(path, "laud", "static", 'images', 'graphs', 'two_hierch.png', sep = "/")
+png(image_path)
+pheatmap(df_subset, annotation_row = cure_df)
+dev.off()
 
-pheatmap(df_subset, scale = "row", annotation_row = cure_df)
-
-ggsave("laud/static/images/graphs/two_hierch.png")
 
 
