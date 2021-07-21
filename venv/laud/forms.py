@@ -127,3 +127,6 @@ class TestForm(FlaskForm):
     cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
     submit = SubmitField("Submit")
 
+class MLForm(FlaskForm):
+    file = FileField('File')
+    submit = SubmitField('Submit')

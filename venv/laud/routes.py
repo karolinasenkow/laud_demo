@@ -1,10 +1,11 @@
-from flask import Flask, redirect, url_for, render_template, request, flash, request, abort, session, send_file
+from flask import Flask, redirect, url_for, render_template, request, flash, request, abort, session, send_file, send_from_directory
 from laud import app, db, bcrypt, blast
+from werkzeug.utils import secure_filename
 import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm, MLForm
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -14,6 +15,9 @@ import csv
 
 # set current path
 path = os.getcwd()
+
+UPLOAD_FOLDER = 'static/downloads'
+
 
 @app.route("/", methods = ["GET", "POST"])
 def about():
@@ -220,6 +224,35 @@ def dim_red():
         return redirect(url_for("command_server7", command = command_server7))
     return render_template("dim_red.html", title = "Taxa Dimensionality Reduction", form = form, legend = "Taxa Dimensionality Reduction")
 
+@app.route("/ML", methods = ["POST","GET"])
+def ML():
+    if request.method == "POST":
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file.filename.rsplit('.', 1)[1].lower()=='csv':
+            filename = secure_filename(file.filename)
+            #basedir = os.path.abspath(os.path.dirname(__file__))
+            file.save(os.path.join(path, 'laud', app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('download_file', name=filename))
+#        if request.form["radiobutton"]:
+#            option = request.form['radiobutton'] # get value of radio button
+#            if option == 'option0':
+#                return 'Random Forest'
+#            elif option == 'option1':
+#                return 'KNN'
+    return render_template("ML.html")
+
+@app.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
 
 @app.route("/results")
 def results():
