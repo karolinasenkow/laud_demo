@@ -347,6 +347,13 @@ def command_server11(command):
         content = file.read()
     return render_template("blast_results.html", content = content)
 
+#@app.route("/command12/<command>")
+#def commmand_server12(command):
+#    run_command("python3 " + path + "/laud/ML.py -d 1")
+#    with open(path + "/laud/ML_knn_outfile.txt", "r") as file:
+#        content = file.read()
+#    return render_template("blast_results.html", content = content)
+
 @app.route("/command12/<command>")
 def command_server12(command):
     run_command("python3 " + path + "/laud/dim_red_df.py")
