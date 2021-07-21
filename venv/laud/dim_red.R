@@ -7,7 +7,12 @@ library(Rtsne)
 
 setwd(getwd())
 set.seed(42)
-data <- read.csv("laud/dim_df.csv")
+
+vec <- read.csv("laud/static/uploads/ML_sample_input.csv")
+vec <- cbind(cure_status = "unkown", vec)
+
+df <- read.csv("laud/dim_df.csv")
+data <- rbind(vec, df)
 data1 <- data[,3:ncol(data)] #species
 cure_status <- data[,1] #cure status
 
@@ -20,7 +25,7 @@ if (args[1] == "tsne") {
     stat_ellipse(type = "norm", geom = "polygon", alpha = 0.3, aes(fill = cure_status))
   ggsave("laud/static/images/graphs/dim_red.png")
 } else {
-  pca <- prcomp(data1, center = TRUE, rank = 10) #standardizes the data
+  pca <- prcomp(data1, center = TRUE, rank = 10) 
   summary(pca)
   theme_set(theme_bw())
   autoplot(pca, data = data, loadings = TRUE, loadings.label = TRUE, colour = "cure_status", frame = TRUE, frame.type="norm")

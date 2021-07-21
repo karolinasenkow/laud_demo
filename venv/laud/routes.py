@@ -16,9 +16,6 @@ import csv
 # set current path
 path = os.getcwd()
 
-UPLOAD_FOLDER = 'static/downloads'
-
-
 @app.route("/", methods = ["GET", "POST"])
 def about():
     if request.method == "POST":
@@ -230,24 +227,23 @@ def ML():
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
-            return redirect(request.url)
+            redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
             flash('No selected file')
-            return redirect(request.url)
+            redirect(request.url)
         if file.filename.rsplit('.', 1)[1].lower()=='csv':
             filename = secure_filename(file.filename)
-            #basedir = os.path.abspath(os.path.dirname(__file__))
             file.save(os.path.join(path, 'laud', app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('download_file', name=filename))
-#        if request.form["radiobutton"]:
-#            option = request.form['radiobutton'] # get value of radio button
-#            if option == 'option0':
-#                return 'Random Forest'
-#            elif option == 'option1':
-#                return 'KNN'
+            redirect(url_for('download_file', name=filename))
+        if request.form["radiobutton"]:
+            option = request.form['radiobutton'] # get value of radio button
+            if option == 'option0':
+                return redirect(url_for("command_server11", command=command_server11))
+            elif option == 'option1':
+                return redirect(url_for("command_server12", command=command_server12))
     return render_template("ML.html")
 
 @app.route('/uploads/<name>')
@@ -343,6 +339,25 @@ def command_server9(command):
 def command_server10(command):
     run_command("Rscript " + path + "/laud/two_hierch.R")
     return redirect(url_for("two_hierch_results"))
+
+@app.route('/command11/<command>')
+def command_server11(command):
+    run_command('python3 ' + path + '/laud/ML.py -d 0')
+    with open(path + "/laud/ML_rf_outfile.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)
+
+@app.route("/command12/<command>")
+def command_server12(command):
+    run_command("python3 " + path + "/laud/dim_red_df.py")
+    return redirect(url_for("command_server13", command = command_server13))
+
+@app.route('/command13/<command>')
+def command_server13(command):
+    run_command('python3 ' + path + '/laud/knn.py')
+    with open(path + "/laud/ML_knn_outfile.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)
 
 @app.route("/clear")
 def clear():
