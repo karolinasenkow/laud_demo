@@ -28,7 +28,7 @@ cure_df <- cure_df %>%
 path = getwd()
 image_path <- paste(path, "laud", "static", 'images', 'graphs', 'two_hierch.png', sep = "/")
 png(image_path)
-pheatmap(df_subset, annotation_row = cure_df)
+pheatmap(df_subset, annotation_row = cure_df, fontsize_row = 5, fontsize_col = 7)
 dev.off()
 
 
