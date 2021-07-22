@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class = "row">
+	<div class= "column">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<fieldset class = "form-group">
+				<legend class = "border-bottom mb-4">{{legend}} </legend>
+				{% if legend == "Random Forest" %} 
+				<br>
+                                <p> Choose cure statuses: </p>
+                                <div class = "form-group">
+                                        {{ form.cure_results.label(class = "form-check-label")}}
+                                        {% if form.cure_results.errors %}
+                                        {{ form.cure_results(class = "form-check form-check-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.cure_results.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.cure_results(class = "form-check form-check-lg") }}
+                                        {% endif %}
+                                </div>
+				<br> <br>
+				<p> Choose additional filters: </p>
+                                <div class = "form-group">
+                                        {{ form.subject_filter.label(class = "form-control-label")}}
+                                        {% if form.subject_filter.errors %}
+                                        {{ form.subject_filter(class = "form-control form-control-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.subject_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.subject_filter(class = "form-control form-control-lg") }}
+                                        {% endif %}
+				</div>
+				 <div class = "form-group">
+                                        {{ form.event_filter.label(class = "form-control-label")}}
+                                        {% if form.event_filter.errors %}
+                                        {{ form.event_filter(class = "form-control form-control-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.event_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.event_filter(class = "form-control form-control-lg") }}
+                                        {% endif %}
+                                </div>
+				 <div class = "form-group">
+                                        {{ form.type_filter.label(class = "form-control-label")}}
+                                        {% if form.type_filter.errors %}
+                                        {{ form.type_filter(class = "form-control form-control-lg is-invalid")}}
+                                        <div class = "invalid-feedback">
+                                                {% for error in form.type_filter.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.type_filter(class = "form-control form-control-lg") }}
+                                        {% endif %}
+                                </div>
+
+				{% endif %}
+
+			</fieldset>
+			<div class = "form-group">
+				{{ form.submit(class = "btn btn-outline-info")}}
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
