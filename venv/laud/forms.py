@@ -130,3 +130,10 @@ class TestForm(FlaskForm):
 class MLForm(FlaskForm):
     file = FileField('File')
     submit = SubmitField('Submit')
+
+class MLForm2(FlaskForm):
+    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
+    event_filter=SelectField('Event', choices=event_choice, default=None)
+    type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
+    submit = SubmitField("Submit")

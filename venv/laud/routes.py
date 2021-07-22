@@ -5,7 +5,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm, MLForm
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm, MLForm, MLForm2
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -241,10 +241,59 @@ def ML():
         if request.form["radiobutton"]:
             option = request.form['radiobutton'] # get value of radio button
             if option == 'option0':
-                return redirect(url_for("command_server11", command=command_server11))
+                return redirect(url_for("RF"))
             elif option == 'option1':
-                return redirect(url_for("command_server12", command=command_server12))
+                return redirect(url_for("knn"))
     return render_template("ML.html")
+
+@app.route("/RF", methods = ["POST", "GET"])
+def RF():
+    form = MLForm2()
+    if form.validate_on_submit():
+        cure_string = 'cure_status like "' + form.cure_results.data[0]
+        for i in range(1, len(form.cure_results.data)):
+            cure_string += '" OR cure_status like "' + form.cure_results.data[i]
+        sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and ('+cure_string+'");'
+        connection = db.session.connection()
+        posts = connection.execute(sql_query)
+        with open("laud/df.csv", "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count", "cure_status"])
+            writer.writeheader()
+            for row in posts:
+                row_data = {
+                        "sample_id": row.sample_id,
+                        "taxa_name": row.taxa_name,
+                        "taxa_count": row.taxa_count,
+                        "cure_status": row.cure_status
+                        }
+                writer.writerow(row_data)
+        return redirect(url_for("command_server11", command = command_server11))
+    return render_template("RF.html", title = "Random Forest", form = form, legend = "Random Forest")
+
+@app.route("/knn", methods = ["POST", "GET"])
+def knn():
+   form = MLForm2()
+   if form.validate_on_submit():
+       cure_string = 'cure_status like "' + form.cure_results.data[0]
+       for i in range(1, len(form.cure_results.data)):
+           cure_string += '" OR cure_status like "' + form.cure_results.data[i]
+       sql_query =  'select sample_id, taxa_name, taxa_count, cure_status from dataset where subject_id like "'+form.subject_filter.data+'" and event like "'+form.event_filter.data+'" and taxa_type like "'+form.type_filter.data+'" and ('+cure_string+'");'
+       connection = db.session.connection()
+       posts = connection.execute(sql_query)
+       with open("laud/df.csv", "w+") as csvfile:
+           writer = csv.DictWriter(csvfile, fieldnames= ["sample_id", "taxa_name", "taxa_count", "cure_status"])
+           writer.writeheader()
+           for row in posts:
+               row_data = {
+                       "sample_id": row.sample_id,
+                       "taxa_name": row.taxa_name,
+                       "taxa_count": row.taxa_count,
+                       "cure_status": row.cure_status
+                       }
+               writer.writerow(row_data)
+       return redirect(url_for("command_server13", command = command_server13))
+   return render_template("knn.html", title = "k-Nearest Neighbors", form = form, legend = "k-Nearest Neighbors")
+ 
 
 @app.route('/uploads/<name>')
 def download_file(name):
@@ -340,8 +389,13 @@ def command_server10(command):
     run_command("Rscript " + path + "/laud/two_hierch.R")
     return redirect(url_for("two_hierch_results"))
 
-@app.route('/command11/<command>')
+@app.route("/command11/<command>")
 def command_server11(command):
+    run_command("python3 " + path + "/laud/dim_red_df.py")
+    return redirect(url_for("command_server12", command = command_server12))
+
+@app.route('/command12/<command>')
+def command_server12(command):
     run_command('python3 ' + path + '/laud/rf.py')
     with open(path + "/laud/ML_rf_outfile.txt","r") as file:
         content = file.read()
@@ -354,13 +408,13 @@ def command_server11(command):
 #        content = file.read()
 #    return render_template("blast_results.html", content = content)
 
-#@app.route("/command13/<command>")
-#def command_server12(command):
-#    run_command("python3 " + path + "/laud/dim_red_df.py")
-#    return redirect(url_for("command_server13", command = command_server13))
+@app.route("/command13/<command>")
+def command_server13(command):
+    run_command("python3 " + path + "/laud/dim_red_df.py")
+    return redirect(url_for("command_server14", command = command_server14))
 
-@app.route('/command12/<command>')
-def command_server12(command):
+@app.route('/command14/<command>')
+def command_server14(command):
     run_command('python3 ' + path + '/laud/knn.py')
     with open(path + "/laud/ML_knn_outfile.txt","r") as file:
         content = file.read()
