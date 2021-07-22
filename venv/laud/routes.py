@@ -342,29 +342,29 @@ def command_server10(command):
 
 @app.route('/command11/<command>')
 def command_server11(command):
-    run_command('python3 ' + path + '/laud/ML.py -d 0')
+    run_command('python3 ' + path + '/laud/rf.py')
     with open(path + "/laud/ML_rf_outfile.txt","r") as file:
         content = file.read()
     return render_template("blast_results.html", content = content)
 
-@app.route("/command12/<command>")
-def commmand_server12(command):
-    run_command("python3 " + path + "/laud/ML.py -d 1")
-    with open(path + "/laud/ML_knn_outfile.txt", "r") as file:
-        content = file.read()
-    return render_template("blast_results.html", content = content)
-
 #@app.route("/command12/<command>")
+#def commmand_server12(command):
+#    run_command("python3 " + path + "/laud/ML.py -d 1")
+#    with open(path + "/laud/ML_knn_outfile.txt", "r") as file:
+#        content = file.read()
+#    return render_template("blast_results.html", content = content)
+
+#@app.route("/command13/<command>")
 #def command_server12(command):
 #    run_command("python3 " + path + "/laud/dim_red_df.py")
 #    return redirect(url_for("command_server13", command = command_server13))
 
-#@app.route('/command13/<command>')
-#def command_server13(command):
-#    run_command('python3 ' + path + '/laud/knn.py')
-#    with open(path + "/laud/ML_knn_outfile.txt","r") as file:
-#        content = file.read()
-#    return render_template("blast_results.html", content = content)
+@app.route('/command12/<command>')
+def command_server12(command):
+    run_command('python3 ' + path + '/laud/knn.py')
+    with open(path + "/laud/ML_knn_outfile.txt","r") as file:
+        content = file.read()
+    return render_template("blast_results.html", content = content)
 
 @app.route("/clear")
 def clear():
