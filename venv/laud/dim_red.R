@@ -4,6 +4,7 @@ args = commandArgs(trailingOnly = TRUE)
 library(ggplot2)
 library(ggfortify)
 library(Rtsne)
+library(ggforce)
 
 setwd(getwd())
 set.seed(42)
@@ -22,13 +23,17 @@ if (args[1] == "tsne") {
   tsne_plot <- data.frame(x = tsne$Y[,1], y = tsne$Y[,2], cure_status = cure_status)
   ggplot(tsne_plot, aes(x=x, y=y, color=cure_status)) + 
     geom_point() + 
-    stat_ellipse(type = "norm", geom = "polygon", alpha = 0.3, aes(fill = cure_status))
+    stat_ellipse(type = "norm", linetype = 2) +  
+    geom_mark_ellipse(aes(fill = cure_status, color = cure_status))
   ggsave("laud/static/images/graphs/dim_red.png")
 } else {
   pca <- prcomp(data1, center = TRUE, rank = 10) 
-  summary(pca)
+  df_out <- as.data.frame(pca$x)
   theme_set(theme_bw())
-  autoplot(pca, data = data, loadings = TRUE, loadings.label = TRUE, colour = "cure_status", frame = TRUE, frame.type="norm")
+  ggplot(df_out, aes(x = PC1, y = PC2, color = cure_status)) + 
+	  geom_point() + 
+	  stat_ellipse(type = "norm", linetype = 2)+
+	  geom_mark_ellipse(aes(fill = cure_status, color = cure_status))
   ggsave("laud/static/images/graphs/dim_red.png")
 }
 
