@@ -319,6 +319,10 @@ def dim_red_results():
 def two_hierch_results():
     return render_template("two_hierch_results.html")
 
+@app.route("/tutorial")
+def tutorial():
+    return render_template("tutorial.html")
+
 def run_command(command):
     return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read()
 

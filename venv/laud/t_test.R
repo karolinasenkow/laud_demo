@@ -13,7 +13,7 @@ t_test_boxplot <- paste(path, 'laud', 'static', 'images', 'graphs', 'boxplot.png
 png(t_test_boxplot)
 # 2. Create the plot
 #boxplot(taxa_count~cure_status)
-ggplot(data, aes(x = cure_status, y = taxa_count)) +
+ggplot(data, aes(x = cure_status, y = taxa_count, color = cure_status)) +
 	geom_boxplot() + 
 	theme_bw() 
 # 3. Close the file
