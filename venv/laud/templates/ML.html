@@ -1,40 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-<h5>Change Sample Input With Patient's Bacterial Profile:</h5>
-<a href="/static/downloads/ML_sample_input.csv" download="sample_input.csv">Download Sample Input</a>
-<br>
-<br>
-<br>
-<h5>Select ML Algorithm:</h5>
-<form action =' #', method="post", enctype=multipart/form-data>
-	<div class="form-check">
-		<input class="form-check-input" type="radio" name="radiobutton" id="" value="option0" checked>
-			<label class="form-check-label" for="radiobutton1">
-				Random Forest
-			</label>
+<div class = "row">
+	<div class = "column">
+		<h4>Change Sample Input With Patient's Bacterial Profile:</h4>
+		<a style = "font-size:20px" href="/static/downloads/ML_sample_input.csv" download="sample_input.csv">Download Sample Input</a>
+		<br>
+		<br>
+		<br>
+		<h4>Select ML Algorithm:</h4>
+		<form action =' #', method="post", enctype=multipart/form-data style = "font-size:20px">
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="radiobutton" id="" value="option0" checked>
+				<label class="form-check-label" for="radiobutton1">
+					Random Forest
+				</label>
+			</div>
+
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2"
+												value="option1">
+				<label class="form-check-label" for="exampleRadios2">
+					KNN
+				</label>
+			</div>
+
+
+			<br>
+			<h4>Input File with Patient Data:</h4>
+			<h6 style="color:red;">*File must be named 'ML_sample_input.csv'</h6>
+			<br>
+			<input type=file name=file>
+			<br>
+			<br>
+			<input class = "btn btn-primary btn-dark" type=submit value=Submit>
+		</form>
+
+
+		</form>
+
 	</div>
-
-	<div class="form-check">
-		<input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2"
-										value="option1">
-			<label class="form-check-label" for="exampleRadios2">
-				KNN
-			</label>
-	</div>
-
-
-<br>
-<h5>Input File with Patient Data:</h5>
-<br>
-<input type=file name=file>
-<br>
-<br>
-<input type=submit value=Submit>
-</form>
-
-
-</form>
-
-
+</div>
 
 {% endblock content %}

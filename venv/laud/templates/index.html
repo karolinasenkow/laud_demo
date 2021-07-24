@@ -3,8 +3,8 @@
 <div class  = "row">
 	<div class= "column">
 		<h1>BLASTn</h1>
-		<form action =' #', method="post">
-			<p>Enter FASTA sequence: <br> <textarea rows="6" cols="60" name="post1"></textarea> </p>
+		<form action =' #', method="post" style = "font-size: 20px">
+			<p style = "font-size: 30px">Enter FASTA sequence: <br> <textarea style = "font-size: 20px" rows="6" cols="60" name="post1"></textarea> </p>
 
 			<div class="form-check">
 				<input class="form-check-input" type="radio" name="radiobutton" id="" value="option0" checked>
@@ -29,13 +29,13 @@
 				</label>
 			</div>
 			<br>
-			<input type="submit">
+			<input class = "btn btn-primary btn-dark"  type="submit">
 		</form>
 
 		<div class="col-md-4">
 			<div class="content-section">
 				<ul class="list-group">
-					<a class="nav-item nav-link" href="{{ url_for('_16S_blast_id') }}">Check Subject ID of 16S BLAST Hit Result</a>
+					<a class="nav-item nav-link" style = "font-size:20px" href="{{ url_for('_16S_blast_id') }}">Check Subject ID of 16S BLAST Hit Result</a>
 				</ul>
 				</p>
 			</div>
@@ -45,12 +45,12 @@
 		<h1> Statistical Tests </h1>
 		<div class = "row">
 			<div class = "column">
-				<a class = "nav-item nav-link" href = "{{url_for('chisq_ind')}}">Chi Square Test for Independence</a>
+				<a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('chisq_ind')}}">Chi Square Test for Independence</a>
 			</div>
 		</div>
 		<div class = "row">
 			<div class = "column">
-				<a class = "nav-item nav-link" href = "{{url_for('t_test')}}">Two-Sample t-Test</a>
+				<a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('t_test')}}">Two-Sample t-Test</a>
 			</div>
 		</div>
 		<br>
@@ -58,12 +58,12 @@
                 <h1> Cluster Analysis </h1>
 		<div class = "row">
 			<div class = "column">
-				<a class = "nav-item nav-link" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering</a>
+				<a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering</a>
 			</div>
 		</div>
 		<div class = "row">
 			<div class = "column">
-				<a class = "nav-item nav-link" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a>
+				<a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a>
 			</div>
 		</div>
 		<br>
@@ -71,7 +71,7 @@
 		<h1>Supervised Machine Learning </h1>
 		<div class = "row">
                         <div class = "column">
-                                <a class = "nav-item nav-link" href = "{{url_for('ML')}}">Random Forest & KNN</a>
+                                <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('ML')}}">Random Forest & KNN</a>
                         </div>
 
 	</div>

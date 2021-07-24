@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-
-<img src="static/images/graphs/boxplot.png" alt="T Test" width = "1000"/>
-<pre>{{ content }}</pre>
-
+<div class = "row">
+	<div class = "column">
+		<img src="static/images/graphs/boxplot.png" alt="T Test" width = "700"/>
+		<pre>{{ content }}</pre>
+	</div>
+</div>
 {% endblock %}
 
