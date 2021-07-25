@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 
 df = pd.read_csv("laud/df.csv")
+df = df[df['sample_id'] != "IUMP114.0.SL1"]
+df = df.reset_index(drop = True)
 first_column = df.pop("cure_status")
 df.insert(0, "cure_status", first_column)
 first_sample = df.iloc[0][1]
