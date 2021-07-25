@@ -1,4 +1,32 @@
 {% extends 'layout.html' %}
 {% block content %}
+<div class = "row">
+	<div class = "column">
+		<table style = "width: 100%">
+			<tr>
+				<th rowspan = "7"> <img src="static/images/flow_chart.png" alt="Flow Chart" width = "200"/> </th>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering Heatmap</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('ML')}}">Random Forest and k-NN</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('sql')}}">Database Query</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('chisq_ind')}}">Chi-Square Test of Independence</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('t_test')}}">Two-Sample t-Test</a> <br> </th>
+			</tr>
+			<tr>
+				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('home')}}">BLAST</a> <br> </th>
+			</tr>
+		</table>
+	</div>
+</div>
 
 {% endblock %}
