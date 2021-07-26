@@ -5,7 +5,7 @@ import os, subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_output
 from laud.models import Metadata, _16S
-from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, TestForm, MLForm, MLForm2
+from laud.forms import ChoiceForm, _16SID, ChiForm, t_testForm, HeatForm, HeatForm2, DimForm, DimForm2, TestForm, MLForm, MLForm2
 import secrets
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -194,10 +194,37 @@ def two_hierch():
                 writer.writerow(row_data)
         return redirect(url_for("command_server9", command = command_server9))
     return render_template("two_hierch.html", title = "Two-way Hierarchical Clustering Heatmap", form = form, legend = "Two-way Hierarchical Clustering Heatmap")
- 
 
-@app.route("/dim_red", methods = ["POST", "GET"])
+
+@app.route("/dim_red", methods = ["POST","GET"])
 def dim_red():
+    form = DimForm2()
+    if request.method == "POST":
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            redirect(request.url)
+        if file.filename.rsplit('.', 1)[1].lower()=='csv':
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(path, 'laud', app.config['UPLOAD_FOLDER'], filename))
+            redirect(url_for('download_file', name=filename))
+        if file.filename == 'ML_sample_input.csv':
+            #option = request.form['radiobutton'] # get value of radio button
+            #if option == 'option0':
+            #    return redirect(url_for("t_SNE"))
+            #elif option == 'option1':
+            #    return redirect(url_for("PCA"))
+            return redirect(url_for('dim_red2'))
+    return render_template("dim_red2.html")
+
+@app.route("/dim_red2", methods = ["POST", "GET"])
+def dim_red2():
     form = DimForm()
     if form.validate_on_submit():
         session["dim_meth"] = form.dim_meth.data
@@ -404,13 +431,6 @@ def command_server12(command):
     with open(path + "/laud/ML_rf_outfile.txt","r") as file:
         content = file.read()
     return render_template("blast_results.html", content = content)
-
-#@app.route("/command12/<command>")
-#def commmand_server12(command):
-#    run_command("python3 " + path + "/laud/ML.py -d 1")
-#    with open(path + "/laud/ML_knn_outfile.txt", "r") as file:
-#        content = file.read()
-#    return render_template("blast_results.html", content = content)
 
 @app.route("/command13/<command>")
 def command_server13(command):

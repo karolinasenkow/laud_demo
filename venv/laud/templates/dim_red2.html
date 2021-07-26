@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class = "row">
+	<div class = "column">
+		<h4>Change Sample Input With Patient's Bacterial Profile:</h4>
+		<a style = "font-size:20px" href="/static/downloads/ML_sample_input.csv" download="sample_input.csv">Download Sample Input</a>
+		<br>
+		<br>
+		<br>
+		<form action =' #', method="post", enctype=multipart/form-data style = "font-size:20px">
+			<br>
+			<h4>Input File with Patient Data:</h4>
+			<h6 style="color:red;">*File must be named 'ML_sample_input.csv'</h6>
+			<br>
+			<input type=file name=file>
+			<br>
+			<br>
+			<input class = "btn btn-primary btn-dark" type=submit value=Submit>
+		</form>
+
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock content %}
