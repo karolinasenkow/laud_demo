@@ -15,7 +15,8 @@ png(t_test_boxplot)
 #boxplot(taxa_count~cure_status)
 ggplot(data, aes(x = cure_status, y = taxa_count, color = cure_status)) +
 	geom_boxplot() + 
-	theme_bw() 
+	theme_bw() +
+        theme(text = element_text(size = 15))	
 # 3. Close the file
 dev.off()
 
