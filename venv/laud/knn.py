@@ -29,5 +29,5 @@ f.write("Accuracy on training data: " + str(knn_search.score(train_data, train_t
 f.write("\n")
 f.write("Accuracy on testing data: " + str(knn_search.score(test_data, test_target)))
 f.write("\n")
-f.write(str(predicted))
+f.write("Predicted cure status: " + str(predicted))
 f.close()
