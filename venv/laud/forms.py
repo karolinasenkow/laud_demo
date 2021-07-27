@@ -80,7 +80,7 @@ class _16SID(FlaskForm):
 class ChiForm(FlaskForm):
     species_result = SelectField("Species", choices = species_choice, default = None)
     #var = RadioField("Categories", choices = [("event", "Event"), ("cure_status", "Cure Status")])
-    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    cure_results = MultiCheckboxField("Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     sample_filter=SelectField('Sample ID', choices=sample_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
@@ -89,8 +89,8 @@ class ChiForm(FlaskForm):
 
 class t_testForm(FlaskForm):
     species_result = SelectField("Species", choices = species_choice, default = None)
-    cure_result1=SelectField('Cure Status', choices=cure_choice, default=None)
-    cure_result2=SelectField('Cure Status', choices=cure_choice, default=None)
+    cure_result1=SelectField('Status', choices=cure_choice, default=None)
+    cure_result2=SelectField('Status', choices=cure_choice, default=None)
     submit = SubmitField("Submit")
 
 
@@ -99,11 +99,11 @@ class HeatForm(FlaskForm):
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
-    cure_filter=SelectField('Cure Status', choices=cure_choice, default=None)
+    cure_filter=SelectField('Status', choices=cure_choice, default=None)
     submit = SubmitField("Submit")
 
 class HeatForm2(FlaskForm):
-    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    cure_results = MultiCheckboxField("Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
@@ -112,7 +112,7 @@ class HeatForm2(FlaskForm):
 
 class DimForm(FlaskForm):
     dim_meth = RadioField("Methods", choices = [("tsne", "t-SNE"), ("pca", "Principal Component Analysis")])
-    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    cure_results = MultiCheckboxField("Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
@@ -132,7 +132,7 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class TestForm(FlaskForm):
-    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    cure_results = MultiCheckboxField("Status", choices = cure_choice)
     submit = SubmitField("Submit")
 
 class MLForm(FlaskForm):
@@ -140,7 +140,7 @@ class MLForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class MLForm2(FlaskForm):
-    cure_results = MultiCheckboxField("Cure Status", choices = cure_choice)
+    cure_results = MultiCheckboxField("Status", choices = cure_choice)
     subject_filter=SelectField('Subject ID', choices=subject_choice, default=None)
     event_filter=SelectField('Event', choices=event_choice, default=None)
     type_filter=SelectField('Taxa Type', choices=type_choice, default=None)
