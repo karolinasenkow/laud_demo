@@ -6,26 +6,33 @@
 		<p> Imagine that you're a doctor and you've obtained a urine sample from one patient. You want to use that urine sample to classify that patient's cure status (e.g. healthy, IU, etc.). The below flow chart will guide you toward achieving this just by using the tools integrated in this database. </p> 
 		<table style = "width: 100%">
 			<tr>
-				<th rowspan = "7"> <img src="static/images/flow_chart.png" alt="Flow Chart" width = "200"/> </th>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering Heatmap</a> <br> </th>
+				<th rowspan = "7"> <img src="static/images/flow_chart.png" alt="Flow Chart" width = "250"/> </th>
+				<th> <p> What's the overall association between cure status and taxa abundance? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering Heatmap</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('ML')}}">Random Forest and k-NN</a> <br> </th>
+				<th> <p> What cure status is this patient predicted to have? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('ML')}}">Random Forest and k-NN</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a> <br> </th>
+				<th> <p> Where does this patient fall within the overall pattern of cure statuses? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('sql')}}">Database Query</a> <br> </th>
+				<th> <p> The doctor has found <i> Streptococcus mitis </i> in this patient's urine sample. What other samples in our database have this species? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('sql')}}">Database Query</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('chisq_ind')}}">Chi-Square Test of Independence</a> <br> </th>
+				<th> <p> Is the prevalence of <i> S. mitis </i> associated with cure status? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('chisq_ind')}}">Chi-Square Test of Independence</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('t_test')}}">Two-Sample t-Test</a> <br> </th>
+				<th> <p> Is the mean relative abundance of <i> S. mitis </i> different between healthy and IU samples? </p>  
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('t_test')}}">Two-Sample t-Test</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <br> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('home')}}">BLAST</a> <br> </th>
+				<th> <p> Is there any sequence similarity to our database? </p>
+					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('home')}}">BLAST</a> </p> </th>
 			</tr>
 		</table>
 	</div>
