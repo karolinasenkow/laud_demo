@@ -3,19 +3,19 @@
 <div class = "row">
 	<div class = "column">
 		<h1> Scenario </h1>
-		<p> Imagine that you're a doctor and you've obtained a urine sample from one patient. You want to use that urine sample to classify that patient's cure status (e.g. healthy, IU, etc.). The below flow chart will guide you toward achieving this just by using the tools integrated in this database. </p> 
+		<p> Imagine that you're a doctor and you've obtained a urine sample from one patient. You want to use that urine sample to classify that patient's health status (e.g. healthy, IU, etc.). The below flow chart will guide you toward achieving this just by using the tools integrated in this database. </p> 
 		<table style = "width: 100%">
 			<tr>
-				<th rowspan = "7"> <img src="static/images/flow_chart.png" alt="Flow Chart" width = "250"/> </th>
-				<th> <p> What's the overall association between cure status and taxa abundance? </p>
+				<th rowspan = "7"> <img src="static/images/flow_chart2.png" alt="Flow Chart" width = "250"/> </th>
+				<th> <p> What's the overall association between health status and taxa abundance? </p>
 					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('two_hierch')}}">Two-way Hierarchical Clustering Heatmap</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <p> What cure status is this patient predicted to have? </p>
+				<th> <p> What health status is this patient predicted to have? </p>
 					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('ML')}}">Random Forest and k-NN</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <p> Where does this patient fall within the overall pattern of cure statuses? </p>
+				<th> <p> Where does this patient fall within the overall pattern of health statuses? </p>
 					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('dim_red')}}">Dimensionality Reduction</a> </p> </th>
 			</tr>
 			<tr>
@@ -23,7 +23,7 @@
 					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('sql')}}">Database Query</a> </p> </th>
 			</tr>
 			<tr>
-				<th> <p> Is the prevalence of <i> S. mitis </i> associated with cure status? </p>
+				<th> <p> Is the prevalence of <i> S. mitis </i> associated with health status? </p>
 					<p> <a class = "nav-item nav-link" style = "font-size:20px" href = "{{url_for('chisq_ind')}}">Chi-Square Test of Independence</a> </p> </th>
 			</tr>
 			<tr>
