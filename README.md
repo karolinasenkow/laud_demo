@@ -92,13 +92,26 @@
      * output of sql query page
  * index.html
      * data analysis page - blast + links to other analyses
-  * 
+ * 16s_to_sub_id.html
+     * "Check Subject ID of 16S BLAST Hit Result" page
+  * chisq_ind.html
+      * Chi Squared Test for Independence page
+  * t_test.html
+      * T Test page
+ * two_hierch.html
+     * Two-way Hierarchical Clustering Heatmap page
+ * dim_red2.html
+     * Dimensionality Reduction page - input patient file
+ * dim_red.html
+     * Dimensionality Reduction page - choose cure statuses, filters, etc.
  * tutorial.html
      * tutorial page
 * ML.html
     * User upload / select ML algorithm page
  * RF.html
+     * Random Forest page
  * knn.html
+     * KNN page
 
 #### laud_demo/venv/laud/static
 * css : contains css styles
