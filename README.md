@@ -68,13 +68,37 @@
 
 #### laud_demo/venv/laud:
 
-* blast.py : BLAST script
-* chisq_ind.py : chi-squared analysis
-* knn.py : KNN script
-* rf.py : Random Forest script
+* blast.py
+    * BLAST script
+* chisq_ind.py
+    * chi-squared analysis
+* knn.py
+    * KNN script
+* rf.py
+    * Random Forest script
 
 #### laud_demo/venv/laud/templates
-##### HTML pages
+* layout.html
+    * navigation bar at top of page
+* about.html
+    * about page
+* team.html
+    * team page
+ * choose_query.html
+     * database query page - simple sql search
+ * adv_sql.html
+     * custom/advanced sql search page
+ * sql_example.html
+     * output of sql query page
+ * index.html
+     * data analysis page - blast + links to other analyses
+  * 
+ * tutorial.html
+     * tutorial page
+* ML.html
+    * User upload / select ML algorithm page
+ * RF.html
+ * knn.html
 
 #### laud_demo/venv/laud/static
 * css : contains css styles
@@ -82,4 +106,5 @@
 * uploads : edited bacterial abundance csv file that user uploads goes here
 * images : all graphs/charts that are generated during analysis are stored here
     
-    
+## Authors
+Shari Tian and Karolina Senkow
