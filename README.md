@@ -70,12 +70,30 @@
 
 * blast.py
     * BLAST script
+* 16S_blast_result.txt
+    * txt file of blastn output against 16S db
+* wgs_blast_result.txt
+    * txt file of blastn output against WGS db
+* assembled_contig_blast_result.txt
+    * txt file of blastn output against assembled contig db
 * chisq_ind.py
-    * chi-squared analysis
+    * chi-squared analysis script
 * knn.py
     * KNN script
+* ML_knn_outfile.txt
+    * txt file of KNN output 
 * rf.py
     * Random Forest script
+* ML_rf_outfile.txt
+    * txt file of random forest output
+* t_test.E
+    * T Test script
+ * t_test_df.csv
+     * csv file containing data that user filtered used for T Test analysis
+ * two_hierarch.R
+     * Two-Way Hierarchical Clustering script
+ * dim_red.R
+     * scripts for t-sne and PCA analysis
 
 #### laud_demo/venv/laud/templates
 * layout.html
@@ -104,6 +122,12 @@
      * Dimensionality Reduction page - input patient file
  * dim_red.html
      * Dimensionality Reduction page - choose cure statuses, filters, etc.
+  * dim_red_results.html
+      * displays dimensionality reduction graph image
+  * heatmap.html
+      * heatmap options page - choose what to display
+  * heatmap_results.html
+      * displays results of heatmap
  * tutorial.html
      * tutorial page
 * ML.html
