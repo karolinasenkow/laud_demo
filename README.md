@@ -78,14 +78,6 @@
     * txt file of blastn output against assembled contig db
 * chisq_ind.py
     * chi-squared analysis script
-* knn.py
-    * KNN script
-* ML_knn_outfile.txt
-    * txt file of KNN output 
-* rf.py
-    * Random Forest script
-* ML_rf_outfile.txt
-    * txt file of random forest output
 * t_test.E
     * T Test script
  * t_test_df.csv
@@ -94,6 +86,18 @@
      * Two-Way Hierarchical Clustering script
  * dim_red.R
      * scripts for t-sne and PCA analysis
+* dim_red_df.py
+    * transform input file into correct format for analysis
+* dim_df.csv
+    * transformed input file that analysis is performed on
+* knn.py
+    * KNN script
+* ML_knn_outfile.txt
+    * txt file of KNN output 
+* rf.py
+    * Random Forest script
+* ML_rf_outfile.txt
+    * txt file of random forest output
 
 #### laud_demo/venv/laud/templates
 * layout.html
@@ -128,14 +132,14 @@
       * heatmap options page - choose what to display
   * heatmap_results.html
       * displays results of heatmap
- * tutorial.html
-     * tutorial page
 * ML.html
     * User upload / select ML algorithm page
  * RF.html
      * Random Forest page
  * knn.html
      * KNN page
+* tutorial.html
+    * tutorial page
 
 #### laud_demo/venv/laud/static
 * css : contains css styles
